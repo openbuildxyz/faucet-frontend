@@ -1,0 +1,23 @@
+.main {
+    min-height: 100vh;
+    padding-bottom: 64px;
+    padding-top: 64px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.grid {
+    display: grid;
+    gap: 32px;
+    margin-top: 48px;
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

@@ -1,0 +1,67 @@
+.container {
+    height: 100%;
+}
+
+.title {
+    margin-bottom: 24px !important;
+}
+
+.grid {
+    display: grid;
+    gap: 16px;
+}
+
+.card {
+    border: none;
+    color: white;
+}
+
+.cardGreen {
+    background: linear-gradient(145deg, #00DC82 0%, #00b368 100%);
+}
+
+.cardPurple {
+    background: linear-gradient(145deg, #8B5CF6 0%, #7C3AED 100%);
+}
+
+.cardYellow {
+    background: linear-gradient(145deg, #FBBF24 0%, #D97706 100%);
+}
+
+.cardContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.networkName {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 4px;
+    color: white;
+}
+
+.label {
+    font-size: 14px;
+    opacity: 0.9;
+    display: block;
+    color: white;
+}
+
+.balance {
+    font-size: 24px;
+    display: block;
+    margin-top: 4px;
+    color: white;
+}
+
+.requests {
+    text-align: right;
+}
+
+.requestCount {
+    font-size: 20px;
+    display: block;
+    margin-top: 4px;
+    color: white;
+}

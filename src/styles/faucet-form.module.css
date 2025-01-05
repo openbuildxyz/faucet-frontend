@@ -1,0 +1,33 @@
+.faucetCard {
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+}
+
+.cardTitle {
+    margin-bottom: 10px !important;
+    color: #1a1a1a;
+}
+
+.cardDescription {
+    margin-bottom: 20px !important;
+    color: #666;
+}
+
+.addressInput {
+    margin-bottom: 20px;
+}
+
+.submitButton {
+    height: 50px;
+    font-size: 18px;
+    border-radius: 25px;
+    background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.submitButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
