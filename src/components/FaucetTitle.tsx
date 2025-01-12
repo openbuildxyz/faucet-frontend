@@ -1,6 +1,6 @@
 import styles from '../styles/faucet-title.module.css'
 
-export function FaucetTitle() {
+const FaucetTitle = () => {
   return (
     <div className={styles.hero}>
       <h1 className={styles.title}>
@@ -13,3 +13,4 @@ export function FaucetTitle() {
   )
 }
 
+export default FaucetTitle;

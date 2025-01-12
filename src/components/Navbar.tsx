@@ -5,7 +5,7 @@ import Image from 'next/image'
 import styles from '../styles/navbar.module.css'
 import { useState, useEffect } from 'react'
 
-export function Navbar() {
+const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -46,3 +46,4 @@ export function Navbar() {
   )
 }
 
+export default Navbar;

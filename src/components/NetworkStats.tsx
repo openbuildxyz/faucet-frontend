@@ -27,7 +27,7 @@ const STATS = [
   }
 ]
 
-export function NetworkStats() {
+const NetworkStats = () => {
   return (
     <div className={styles.container}>
       <Title level={2} className={styles.title}>Network Statistics</Title>
@@ -51,3 +51,5 @@ export function NetworkStats() {
     </div>
   )
 }
+
+export default NetworkStats;

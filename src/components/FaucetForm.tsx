@@ -1,28 +1,36 @@
-'use client'
-
 import React, { useState } from "react";
 import { Card, Input, Button, Typography, message } from "antd";
 import styles from "../styles/faucet-form.module.css";
+import { requestToken } from "@/api/faucet";
 
 const { Title, Paragraph } = Typography;
 
-export function FaucetForm() {
+const FaucetForm = () => {
   const [address, setAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [tx, setTx] = useState("");
 
   const handleSubmit = async () => {
-    if (!address) {
-      message.error("请输入有效的钱包地址");
+    const isValidAddress = /^0x[a-fA-F0-9]{40}$/.test(address);
+
+    if (!address || !isValidAddress) {
+      message.error("Please enter a valid wallet address");
       return;
     }
 
     setIsLoading(true);
+
     try {
-      // Here you would typically call your API to request tokens
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulating API call
-      message.success("代币已成功发送到您的钱包");
+      const response = await requestToken(address, '0.01', 'eth', '10021');
+      // Check if response is successful and contains data
+      if (response?.data?.tx) {
+        setTx(response.data.tx);
+        message.success(`Transaction sent successfully! Transaction ID: ${response.data.tx}`);
+      } else {
+        message.error("Transaction failed or no transaction data available");
+      }
     } catch (error) {
-      message.error("发送代币时出错，请稍后再试");
+      // message.error("An error occurred while sending tokens, please try again later");
     } finally {
       setIsLoading(false);
     }
@@ -31,28 +39,39 @@ export function FaucetForm() {
   return (
     <Card className={styles.faucetCard}>
       <Title level={2} className={styles.cardTitle}>
-        Linea Sepolia 水龙头
+        ETH Sepolia Faucet
       </Title>
       <Paragraph className={styles.cardDescription}>
-        在这里获取测试网 ETH 和其他测试代币
+        Get testnet ETH and other test tokens here
       </Paragraph>
+
+      <Paragraph className={styles.claimLimit}>
+        You can only claim 0.01 ETH at a time.
+      </Paragraph>
+
       <Input
-        placeholder="输入您的钱包地址"
+        placeholder="Enter your wallet address"
         size="large"
         className={styles.addressInput}
         value={address}
         onChange={(e) => setAddress(e.target.value)}
       />
-      <Button 
-        type="primary" 
-        size="large" 
-        block 
+      {tx && <Paragraph className={styles.cardDescription}>
+        Transaction: <a href={`https://sepolia.etherscan.io/tx/${tx}`} target="_blank" rel="noopener noreferrer">View on Etherscan</a>
+      </Paragraph>}
+      <Button
+        type="primary"
+        size="large"
+        block
         className={styles.submitButton}
         onClick={handleSubmit}
         loading={isLoading}
+        disabled={!address}
       >
-        领取代币
+        Claim Tokens
       </Button>
     </Card>
   );
 }
+
+export default FaucetForm;

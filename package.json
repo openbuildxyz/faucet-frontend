@@ -1,5 +1,5 @@
 {
-  "name": "faucet-frontend",
+  "name": "faucet",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,11 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.5.2",
-    "antd": "^5.22.7",
-    "next": "15.0.3",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "antd": "^5.21.6",
+    "moment": "^2.30.1",
+    "next": "^15.1.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@types/node": "^20",
