@@ -6,7 +6,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps<{ ses
   return (
     <>
       <Head>
-        <link rel="icon" type="image/png" sizes="32x32" href="https://openbuild.xyz/favicon-96x96.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/logo.png" />
       </Head>
       <Component {...pageProps} />
       </>
