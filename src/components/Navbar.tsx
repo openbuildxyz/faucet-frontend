@@ -80,7 +80,7 @@ const Navbar = () => {
     <nav className={styles.nav}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <Link href="/" className={styles.logo}>
+          <Link href="/faucet/monad" className={styles.logo}>
             <Image
               src="/favicon-16x16.png"
               alt="OpenBuild Logo"
