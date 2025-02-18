@@ -21,13 +21,13 @@ const FaucetForm = () => {
     setIsLoading(true);
 
     try {
-      const response = await requestToken(address, '0.01', 'eth', '10021');
+      const response = await requestToken(address, '1', 'DMON', '20143');
       // Check if response is successful and contains data
       if (response?.data?.tx) {
         setTx(response.data.tx);
         message.success(`Transaction sent successfully! Transaction ID: ${response.data.tx}`);
       } else {
-        message.error("Transaction failed or no transaction data available");
+        message.error(response.message);
       }
     } catch (error) {
       // message.error("An error occurred while sending tokens, please try again later");
@@ -39,14 +39,10 @@ const FaucetForm = () => {
   return (
     <Card className={styles.faucetCard}>
       <Title level={2} className={styles.cardTitle}>
-        ETH Sepolia Faucet
+        Monad Faucet
       </Title>
-      <Paragraph className={styles.cardDescription}>
-        Get testnet ETH and other test tokens here
-      </Paragraph>
-
       <Paragraph className={styles.claimLimit}>
-        You can only claim 0.01 ETH at a time.
+        Fast and reliable. 1 DMON / 24 hrs
       </Paragraph>
 
       <Input

@@ -6,7 +6,7 @@
 
 .cardTitle {
     margin-bottom: 10px !important;
-    color: #1a1a1a;
+    color: #6E54FF !important;
 }
 
 .cardDescription {
@@ -33,5 +33,5 @@
 }
 
 .claimLimit {
-    color:rgb(242, 74, 12);
+    color: #6E54FF;
 }

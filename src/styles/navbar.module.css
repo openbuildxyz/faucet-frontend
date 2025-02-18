@@ -7,56 +7,182 @@
     right: 0;
     z-index: 1000;
     transition: box-shadow 0.3s ease;
-}
-
-.scrolled {
+  }
+  
+  .scrolled {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.container {
+  }
+  
+  .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 16px;
-}
-
-.content {
+  }
+  
+  .content {
     display: flex;
     height: 64px;
     align-items: center;
     justify-content: space-between;
-}
-
-.logo {
+  }
+  
+  .logo {
     display: flex;
     align-items: center;
     gap: 8px;
     text-decoration: none;
     color: inherit;
-}
-
-.logoImage {
+  }
+  
+  .logoImage {
     border-radius: 50%;
-}
-
-.logoText {
+  }
+  
+  .logoText {
     font-weight: 700;
     font-size: 30px;
-}
-
-.links {
+  }
+  
+  .links {
     display: flex;
     align-items: center;
     gap: 16px;
-}
-
-.link {
+  }
+  
+  .link {
     font-size: 20px;
     font-weight: 500;
     color: inherit;
     text-decoration: none;
     transition: color 0.2s;
-}
-
-.link:hover {
-    color: #00DC82;
-}
+  }
+  
+  .link:hover {
+    color: #00dc82;
+  }
+  
+  /* Login button styles */
+  .loginButton {
+    font-size: 20px;
+    font-weight: 500;
+    background-color: #00dc82;
+    border-color: #00dc82;
+    color: #fff;
+    transition: all 0.2s;
+  }
+  
+  .loginButton:hover {
+    background-color: #00b36b;
+    border-color: #00b36b;
+    color: #fff;
+  }
+  
+  /* Login modal styles */
+  .loginModal {
+    text-align: center;
+  }
+  
+  .loginContent {
+    padding: 20px 0;
+  }
+  
+  .loginTitle {
+    margin-bottom: 10px !important;
+    color: #00dc82;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  
+  .loginDescription {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 30px !important;
+  }
+  
+  .loginOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .oauthButton {
+    height: 50px;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: all 0.2s;
+  }
+  
+  .oauthButton:hover {
+    opacity: 0.9;
+  }
+  
+  .oauthButton span {
+    margin-right: 8px;
+  }
+  
+  .googleButton {
+    background-color: #4285f4;
+    color: white;
+  }
+  
+  .googleButton:hover {
+    background-color: #3367d6;
+    color: white;
+  }
+  
+  .githubButton {
+    background-color: #24292e;
+    color: white;
+  }
+  
+  .githubButton:hover {
+    background-color: #1a1e22;
+    color: white;
+  }
+  
+  .divider {
+    font-size: 14px;
+    color: #333;
+    margin: 24px 0 !important;
+  }
+  
+  .termsText {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .termsText a {
+    color: #00dc82;
+    text-decoration: none;
+  }
+  
+  .termsText a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .logoText {
+      font-size: 24px;
+    }
+  
+    .link {
+      font-size: 16px;
+    }
+  
+    .loginButton {
+      font-size: 16px;
+    }
+  
+    .loginModal {
+      width: 90% !important;
+    }
+  }
+  
+  
