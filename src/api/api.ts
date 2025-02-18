@@ -33,7 +33,7 @@ export const apiRequest = async <T>(
 
     return {
       code: data.code || 200,
-      message: data.message || "成功",
+      message: data.message,
       data: data.data,
     };
   } catch (error) {

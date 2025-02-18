@@ -53,7 +53,7 @@ const FaucetForm = () => {
         onChange={(e) => setAddress(e.target.value)}
       />
       {tx && <Paragraph className={styles.cardDescription}>
-        Transaction: <a href={`https://sepolia.etherscan.io/tx/${tx}`} target="_blank" rel="noopener noreferrer">View on Etherscan</a>
+        Transaction: <a href={`https://explorer.monad-devnet.devnet101.com/tx/${tx}`} target="_blank" rel="noopener noreferrer">View on Etherscan</a>
       </Paragraph>}
       <Button
         type="primary"
