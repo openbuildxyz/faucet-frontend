@@ -8,12 +8,12 @@ const columns = [
     key: 's',
   },
   {
-    title: 'A-, A, A+',
+    title: 'A+, A, A-',
     dataIndex: 'a',
     key: 'a',
   },
   {
-    title: 'B-, B, B+',
+    title: 'B+, B, B-',
     dataIndex: 'b',
     key: 'b',
   },

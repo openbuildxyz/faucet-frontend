@@ -54,7 +54,7 @@ const FaucetForm = () => {
       // Check if response is successful and contains data
       if (response?.data?.tx) {
         setTx(response.data.tx);
-        message.success(`Transaction sent successfully! Transaction ID: ${response.data.tx}`);
+        message.success("Transaction sent successfully!");
       } else {
         message.error(response.message);
       }
