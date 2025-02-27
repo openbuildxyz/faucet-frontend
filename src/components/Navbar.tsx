@@ -82,8 +82,8 @@ const Navbar = () => {
         <div className={styles.content}>
           <Link href="/faucet/monad" className={styles.logo}>
             <Image
-              src="/favicon-16x16.png"
-              alt="OpenBuild Logo"
+              src="/logo.png"
+              alt="OpenBuild Faucet Logo"
               width={32}
               height={32}
               className={styles.logoImage}
@@ -91,10 +91,6 @@ const Navbar = () => {
             <span className={styles.logoText}>OpenBuild</span>
           </Link>
           <div className={styles.links}>
-            <Link href="https://openbuild.xyz/learn/courses" className={styles.link}>Learn</Link>
-            <Link href="https://openbuild.xyz/learn/challenges" className={styles.link}>Challenges</Link>
-            <Link href="https://openbuild.xyz/bounties" className={styles.link}>Bounties</Link>
-            <Link href="https://openbuild.xyz/shilling" className={styles.link}>SkillHub</Link>
             {isAuthenticated ? (
               <CustomAvatar src={avatar} alt={username} size="40px" />
             ) : (

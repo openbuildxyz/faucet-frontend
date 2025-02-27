@@ -1,12 +1,12 @@
 .main {
     padding-bottom: 64px;
-    padding-top: 64px;
+    padding-top: 35px;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 16px;
+    /* padding: 0 16px; */
 }
 
 .grid {

@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["file-cdn.openbuild.xyz"],
+    domains: ["file-cdn.openbuild.xyz", "github-readme-stats.vercel.app"],
   },
   eslint: {
     ignoreDuringBuilds: true, // 忽略 eslint 检查

@@ -7,7 +7,7 @@ const FaucetTitle = () => {
         Web3 Testnet Faucet ✨
       </h1>
       <p className={styles.description}>
-        Get testnet tokens to start building and testing your decentralized applications. Part of OpenBuild&apos;s developer tools suite.
+        Get testnet tokens to start building and testing your DApp.
       </p>
     </div>
   )

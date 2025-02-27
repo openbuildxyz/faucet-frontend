@@ -1,0 +1,23 @@
+.tableContainer {
+    /* max-width: 600px; */
+    margin: 20px auto;
+}
+
+.customTable .ant-table {
+    font-size: 10px;
+    border-radius: 30px;
+}
+
+.customTable {
+    border-radius: 20px !important;
+}
+
+.customTable .ant-table-thead>tr>th {
+    background-color: #f0f2f5;
+    font-weight: bold;
+    text-align: center;
+}
+
+.customTable .ant-table-thead {
+    line-height: 10px;
+}

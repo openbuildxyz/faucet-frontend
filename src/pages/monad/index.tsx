@@ -1,6 +1,6 @@
 import FaucetTitle from '../../components/FaucetTitle'
 import FaucetForm from '../../components/FaucetForm'
-import NetworkStats from '../../components/NetworkStats'
+import MonadTestnet from '../../components/MonadTestnet'
 import styles from '../../styles/page.module.css'
 import Navbar from '../../components/Navbar'
 
@@ -12,8 +12,8 @@ const Faucet = () => {
             <FaucetTitle />
             <div className={styles.container}>
                 <div className={styles.grid}>
+                    <MonadTestnet />
                     <FaucetForm />
-                    <NetworkStats />
                 </div>
             </div>
         </main>

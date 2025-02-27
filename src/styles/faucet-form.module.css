@@ -1,17 +1,36 @@
-.faucetCard {
-    text-align: center;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-    border-radius: 12px;
+.container {
+    background-color: rgba(25, 27, 31, 0.9);
+    padding: 24px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 550px;
 }
 
 .cardTitle {
     margin-bottom: 10px !important;
-    color: #6E54FF !important;
+    color: #836EF9 !important;
 }
 
 .cardDescription {
     margin-bottom: 20px !important;
-    color: #6E54FF !important;
+    color: #836EF9 !important;
+    opacity: 0.4;
+}
+
+.label {
+    color: white;
+}
+
+
+.note {
+    margin-top: 10px;
+    font-size: 15px;
+    color: white;
+}
+
+
+.walletIcon {
+    margin-right: 5px;
 }
 
 .addressInput {
@@ -20,18 +39,53 @@
 
 .submitButton {
     height: 50px;
+    background-color: #836EF9 !important;
     font-size: 18px;
-    border-radius: 25px;
-    background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+    border-radius: 20px;
     border: none;
-    transition: all 0.3s ease;
-}
-
-.submitButton:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+    color: #fff;
 }
 
 .claimLimit {
-    color: #6E54FF;
+    color: #836EF9;
 }
+
+.iconContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.contact {
+    margin-right: 15px;
+    color: #fff;
+}
+
+.wechatContainer {
+    position: relative;
+    margin-left: 15px;
+}
+
+.wechat {
+    cursor: pointer;
+}
+
+.clickImage {
+    position: fixed;
+    top: 68%;
+    left: 81%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.wechatPng {
+    border-radius: 20px;
+}
+
+.wechatContainer:hover .clickImage {
+    opacity: 1;
+    visibility: visible;
+}
+
