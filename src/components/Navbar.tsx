@@ -2,80 +2,106 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '../styles/navbar.module.css';
 import { useState, useEffect } from 'react';
-import { Button } from 'antd';
+import { Button, Dropdown, Space } from 'antd';
+import { LogoutOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { requestAccessToken } from "@/api/faucet";
 import { requestUser } from "@/api/user";
+import { useAuth } from '../context/AuthContext';
+
+import type { MenuProps } from 'antd';
 
 
 const CustomAvatar = ({ src, alt, size }) => {
   return (
-    <div className={styles.avatar} style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden', position: 'relative' }}>
+    <div
+      className={styles.avatar}
+      style={{
+        width: size,
+        height: size,
+        borderRadius: '50%',
+        overflow: 'hidden',
+        position: 'relative',
+      }}
+    >
       <Image
         src={src}
         alt={alt}
-        layout="fill"
-        objectFit="cover"
+        width={size}  // 设置具体的宽度
+        height={size} // 设置具体的高度
+      // sizes="(max-width: 768px) 40px, (max-width: 1024px) 50px, 80px"  // 设置不同视口宽度的图像尺寸
       />
     </div>
   );
 };
 
-
 const Navbar = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState('');
-  const [avatar, setAvatar] = useState('');
+  const { isAuthenticated, username, token, avatar, github, login, logout, updateToken } = useAuth();
   const router = useRouter();
+  const [hasProcessed, setHasProcessed] = useState(false);
+
   const { code } = router.query;
 
   useEffect(() => {
-    // 检查会话存储中的 token 和 username
-    const token = sessionStorage.getItem('token');
-    const storedUsername = sessionStorage.getItem('username');
-    const storedAvatar = sessionStorage.getItem('avatar');
-
-    // 定义一个 async 函数来处理 code 参数
     const processCode = async () => {
-      if (code) {
+      if (code && !hasProcessed) { // Ensure it only runs once
         console.log("Received OAuth code:", code);
+        setHasProcessed(true); // Mark as processed
         try {
           const response = await requestAccessToken(code);
-          console.log(response)
           if (response.success) {
-            sessionStorage.setItem("token", response.data?.token);
-            // 请求 user
+            updateToken(response.data?.token);
             const userResponse = await requestUser();
             if (userResponse.success) {
-              sessionStorage.setItem("uid", userResponse.data?.uid);
-              sessionStorage.setItem("username", userResponse.data?.username);
-              sessionStorage.setItem("avatar", userResponse.data?.avatar);
-              setAvatar(userResponse.data?.avatar);
+              const token = response.data?.token;
+              const respUid = userResponse.data?.uid;
+              const respUsername = userResponse.data?.username;
+              const respAvatar = userResponse.data?.avatar;
+              const respGithub = userResponse.data?.github;
+              login(respUsername, token, respAvatar, respUid, respGithub);
             }
           } else {
-            //
+            // Handle failure
           }
         } catch (error) {
+          // Handle error
         }
       }
     };
-
-    if (token && storedUsername) {
-      setIsAuthenticated(true);
-      setUsername(storedUsername);
-      if (storedAvatar) {
-        setAvatar(storedAvatar);
-      }
-    } else {
-      // 调用处理 code 的函数
+  
+    if (!isAuthenticated && !hasProcessed) {
       processCode();
     }
-  }, [code, avatar]); // 当 code 变化时重新执行
+  }, [code, isAuthenticated, login, token, updateToken, hasProcessed]); //
+
 
   const handleSignIn = () => {
     router.push(process.env.NEXT_PUBLIC_OAUTH);
   };
 
+  const handleSignOut = () => {
+    logout();
+    router.push('/monad');
+  };
+
+
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: [github],
+      disabled: true,
+    },
+    {
+      type: 'divider',
+    },
+    {
+      key: '2',
+      label: 'Sign out',
+      icon: <LogoutOutlined />,
+      onClick: handleSignOut,
+    },
+  ];
+  
   return (
     <nav className={styles.nav}>
       <div className={styles.container}>
@@ -92,7 +118,13 @@ const Navbar = () => {
           </Link>
           <div className={styles.links}>
             {isAuthenticated ? (
-              <CustomAvatar src={avatar} alt={username} size="40px" />
+              <Dropdown menu={{ items }}>
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                    <CustomAvatar src={avatar} alt={username} size={40} />
+                  </Space>
+                </a>
+              </Dropdown>
             ) : (
               <Button className={styles.signInButton} onClick={handleSignIn}>
                 Sign In
@@ -103,6 +135,6 @@ const Navbar = () => {
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

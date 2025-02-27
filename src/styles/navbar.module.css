@@ -145,6 +145,10 @@
     background-color: #1a1e22;
     color: white;
   }
+
+  .signInButton {
+    font-size: large;
+  }
   
   .divider {
     font-size: 14px;

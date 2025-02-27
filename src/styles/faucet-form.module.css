@@ -58,6 +58,16 @@
     margin-top: 20px;
 }
 
+/* .toOpenBuild {
+    color: greenyellow !important;
+} */
+
+
+.WarnGit {
+    color: yellow !important;
+    margin-right: 5px;
+}
+
 .contact {
     margin-right: 15px;
     color: #fff;

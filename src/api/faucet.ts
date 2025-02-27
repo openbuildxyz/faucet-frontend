@@ -3,15 +3,9 @@ import { apiRequest } from "./api";
 // Request token
 export const requestToken = async (
   address: string,
-  amount: string,
-  tokenSymbol: string,
-  chainId: string
 ) => {
   const tokenData = {
     address,
-    amount,
-    token_symbol: tokenSymbol,
-    chain_id: chainId
   };
 
   try {
