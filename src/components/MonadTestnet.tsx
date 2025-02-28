@@ -43,7 +43,9 @@ const MonadTestnet = () => {
 
     return (
         <Card className={styles.container}>
+            <div className={styles.addTestContainer}>
             <Button className={styles.addTestnetBtn} onClick={handleSwitchNetwork}>Add to MetaMask</Button>
+            </div>
             {networkDetails.map((detail, index) => (
                 <div key={index} className={styles.field}>
                     <Text className={styles.label}>{detail.label}</Text>

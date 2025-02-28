@@ -12,6 +12,7 @@ interface AuthContextType {
   login: (username: string, token: string, avatar: string, uid: string, github: string) => void;
   logout: () => void;
   updateToken: (username: string) => void;
+  updateGithub: (github: string) => void;
 }
 
 // 创建 Context 并给出默认值
@@ -64,6 +65,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
 
+  const updateGithub = (github: string) => {
+    sessionStorage.setItem('github', github);
+  };
+
   // 登录并保存用户信息到 sessionStorage
   const login = (username: string, token: string, avatar: string, uid: string, github: string) => {
     sessionStorage.setItem('username', username);
@@ -96,7 +101,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, username, token, avatar, uid, github, login, logout, updateToken }}>
+    <AuthContext.Provider value={{ isAuthenticated, username, token, avatar, uid, github, login, logout, updateToken, updateGithub }}>
       {children}
     </AuthContext.Provider>
   );

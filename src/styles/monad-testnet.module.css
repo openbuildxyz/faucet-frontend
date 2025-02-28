@@ -1,9 +1,8 @@
 .container {
     background-color: rgba(25, 27, 31, 0.9);
-    padding: 24px;
+    padding: 14px;
     border-radius: 20px; 
-    width: 100%;
-    max-width: 500px;
+    width: 80%;
 }
 
 .field {
@@ -14,6 +13,10 @@
     margin-bottom: 0;
 }
 
+.addTestContainer {
+    display: flex;
+    justify-content: flex-end; /* 居右对齐 */
+}
 
 .addTestnetBtn {
     height: 50px;
@@ -40,7 +43,7 @@
     display: block;
     color: #ffffff;
     margin-bottom: 15px;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .valueContainer {

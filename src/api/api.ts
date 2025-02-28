@@ -17,7 +17,6 @@ export const apiRequest = async <T>(
   }
 
   const token = sessionStorage.getItem("token");
-  console.log(token);
 
   const options: RequestInit = {
     method,

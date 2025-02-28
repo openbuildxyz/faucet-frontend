@@ -1,49 +1,58 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Card, Input, Button, Typography, message, Image } from "antd";
+import { Card, Input, Button, Typography, Image, Popover, notification } from "antd";
 import styles from "../styles/faucet-form.module.css";
 import { requestToken } from "@/api/faucet";
-import { WalletOutlined, WarningOutlined } from '@ant-design/icons';
+import { WalletOutlined, WarningOutlined,  CheckCircleOutlined, CloseCircleOutlined, InfoCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import GitRank from './GitRank';
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import { requestUser } from "@/api/user";
+import type { } from 'antd';
+
+
 
 const { Title, Paragraph, Text } = Typography;
 
 
 const FaucetForm = () => {
-  const { isAuthenticated, username, token, avatar, github, login, logout, updateToken } = useAuth();
+  const { isAuthenticated, github, updateGithub } = useAuth();
   const [address, setAddress] = useState("");
-  const [showImage, setShowImage] = useState(false);
   const containerRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [tx, setTx] = useState("");
 
+  const [api, contextHolder] = notification.useNotification();
 
-  const handleClickWechat = () => {
-    setShowImage(prev => !prev);
-  };
 
-  // 点击容器外部时，关闭图片
-  const handleOutsideClick = (e) => {
-    if (containerRef.current && !containerRef.current.contains(e.target)) {
-      setShowImage(false); // 点击外部时关闭图片
-    }
+  const openNotification = (type: 'success' | 'error' | 'info' | 'warning', message: string) => {
+    const iconMap = {
+      success: <CheckCircleOutlined style={{ color: '#52c41a' }} />,
+      error: <CloseCircleOutlined style={{ color: '#f5222d' }} />,
+      info: <InfoCircleOutlined style={{ color: '#1890ff' }} />,
+      warning: <ExclamationCircleOutlined style={{ color: '#faad14' }} />,
+    };
+
+    api.open({
+      message: type.charAt(0).toUpperCase() + type.slice(1), // 首字母大写
+      description: message,
+      icon: iconMap[type],  // 使用图标映射
+    });
   };
 
   const handleSubmit = async () => {
     const isValidAddress = /^0x[a-fA-F0-9]{40}$/.test(address);
     if (!address || !isValidAddress) {
-      message.error("Please enter a valid EVM wallet address");
+      openNotification("error", "Please enter a valid EVM wallet address")
       return;
     }
 
     if (!isAuthenticated) {
-      message.error("please log in to continue!")
+      openNotification("error", "please log in to continue!")
       return;
     }
 
     if (!github) {
-      message.error("Please bind your GitHub in OpenBuiild first!")
+      openNotification("error", "Please bind your GitHub in OpenBuiild first!")
       return;
     }
 
@@ -54,31 +63,48 @@ const FaucetForm = () => {
       // Check if response is successful and contains data
       if (response?.data?.tx) {
         setTx(response.data.tx);
-        message.success("Transaction sent successfully!");
+        openNotification("success", "Transaction sent successfully!")
       } else {
-        message.error(response.message);
+        openNotification("error", response.message)
       }
     } catch (error) {
-      message.error("An error occurred while sending tokens, please try again later");
+      openNotification("error", "An error occurred while sending tokens, please try again later")
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
+    const handleFocus = async () => {
+      if (!github) {
+        const userResponse = await requestUser();
+        if (userResponse.success) {
+          updateGithub(github)
+        }
+      }
     };
-  }, []);
 
-  const explorer = process.env.NEXT_PUBLIC_MONAD_EXPLORER 
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [github, updateGithub]);
+
+
+  const explorer = process.env.NEXT_PUBLIC_MONAD_EXPLORER
+
+  const wechatPopver = (
+    <img src="/assistant.png" className={styles.wechatPng} alt="Large Image" width={300} height={300} />
+  );
+
 
   return (
     <Card className={styles.container}>
       <Title level={2} className={styles.cardTitle}>
         Monad Faucet
       </Title>
+      {contextHolder}
       <Input
         prefix={<WalletOutlined className={styles.walletIcon} />}
         placeholder="Enter your EVM wallet address"
@@ -88,7 +114,7 @@ const FaucetForm = () => {
         onChange={(e) => setAddress(e.target.value)}
       />
       {tx && <Paragraph className={styles.cardDescription}>
-        <a href={`${explorer}${tx}`} target="_blank" rel="noopener noreferrer">View on MonadExplorer</a>
+        <a className={styles.toExplorer} href={`${explorer}${tx}`} target="_blank" rel="noopener noreferrer">View on MonadExplorer</a>
       </Paragraph>}
       <Button
         type="primary"
@@ -109,7 +135,7 @@ const FaucetForm = () => {
       {isAuthenticated ?
         github ?
           <Image
-            src={`https://github-readme-stats.vercel.app/api?username=${github}`}
+            src={`https://github-readme-stats.vercel.app/api?username=${github}&card_width=510&title_color=836EF9&show_icons=true`}
             alt="GitHub Stats"
           />
           :
@@ -123,24 +149,23 @@ const FaucetForm = () => {
           <Text className={styles.note}>Please <Link className={styles.toOpenBuild} href={process.env.NEXT_PUBLIC_OAUTH}>Sign in</Link> to get your GiitHub Rank. </Text>
         </Paragraph>
       }
-      <div className={styles.iconContainer}>
-        <Text className={styles.contact}>If you have any questions, please contact: </Text>
-        <Link
-          href="https://t.me/OpenBuildxyz"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Open Telegram"
-          className="inline-block"
-        >
-          <img src="/telegram.png" alt="telegram" width={30} height={30} />
-        </Link>
-        <div className={styles.wechatContainer} ref={containerRef}>
-          <img src="/wechat.png" className={styles.wechat} alt="wechat" width={30} height={30} onClick={handleClickWechat} />
-          {showImage &&
-            <div className={styles.clickImage}>
-              <img src="/assistant.png" className={styles.wechatPng} alt="Large Image" width={300} height={300} onClick={handleClickWechat} />
-            </div>
-          }
+      <div className={styles.contactContainer}>
+        <Text className={styles.contact}>If you have any questions or want to communicate with Nads, please join Monad China Devs Community: </Text>
+        <div className={styles.iconContainer}>
+          <Link
+            href="https://t.me/OpenBuildxyz"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Telegram"
+            className={styles.tgIcon}
+          >
+            <img src="/telegram.png" alt="telegram" width={30} height={30} />
+          </Link>
+          <div className={styles.wechatIcon} ref={containerRef}>
+            <Popover content={wechatPopver}>
+              <img src="/wechat.png" className={styles.wechat} alt="wechat" width={30} height={30} />
+            </Popover>
+          </div>
         </div>
       </div>
     </Card>

@@ -1,9 +1,9 @@
 .container {
     background-color: rgba(25, 27, 31, 0.9);
-    padding: 24px;
+    padding: 14px;
     border-radius: 20px;
     width: 100%;
-    max-width: 550px;
+    /* max-width: 550px; */
 }
 
 .cardTitle {
@@ -49,18 +49,23 @@
     color: #836EF9;
 }
 
-.iconContainer {
+.contactContainer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
     margin-top: 20px;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
-/* .toOpenBuild {
-    color: greenyellow !important;
-} */
 
+.iconContainer {
+    display: flex;
+    /* justify-content: flex-start; */
+    gap: 10px; 
+    margin-top: -20px; 
+    margin-left: -100px;
+}
 
 .WarnGit {
     color: yellow !important;
@@ -68,13 +73,10 @@
 }
 
 .contact {
-    margin-right: 15px;
     color: #fff;
-}
-
-.wechatContainer {
-    position: relative;
-    margin-left: 15px;
+    flex-grow: 1;
+    margin: 0;
+    line-height: 2;
 }
 
 .wechat {
@@ -89,8 +91,14 @@
     z-index: 1000;
 }
 
-.wechatPng {
-    border-radius: 20px;
+.toExplorer {
+    color: #836EF9 !important;
+    font-weight: bold;
+}
+
+.toOpenBuild {
+    color: #836EF9 !important;
+    font-weight: bold;
 }
 
 .wechatContainer:hover .clickImage {
