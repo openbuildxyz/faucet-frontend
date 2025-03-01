@@ -3,7 +3,6 @@
     padding: 14px;
     border-radius: 20px;
     width: 100%;
-    /* max-width: 550px; */
 }
 
 .cardTitle {
@@ -21,9 +20,14 @@
 }
 
 
+.modalNote {
+    font-size: 17px;
+    color: #1a1a1a;
+}
+
 .note {
-    margin-top: 10px;
     font-size: 15px;
+    margin-top: 10px;
     color: white;
 }
 
@@ -59,13 +63,35 @@
 }
 
 
+.gitContent {
+    flex-grow: 1;
+}
+
 .iconContainer {
     display: flex;
     /* justify-content: flex-start; */
-    gap: 10px; 
-    margin-top: -20px; 
-    margin-left: -100px;
+    gap: 10px;
+    margin-top: 10px;
 }
+
+.iconLink {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    background-color: #1a1a1a;
+}
+
+.iconGithub {
+    margin-right: 10px;
+    /* background-color: #3c3b3b !important; */
+    /* width: 50px;
+    height: 50px; */
+    /* border-radius: 60%; */
+}
+
+/* .iconGithub:hover {
+    background-color: #fff !important;
+} */
 
 .WarnGit {
     color: yellow !important;
@@ -97,7 +123,7 @@
 }
 
 .toOpenBuild {
-    color: #836EF9 !important;
+    color: #01DB83 !important;
     font-weight: bold;
 }
 
@@ -105,4 +131,3 @@
     opacity: 1;
     visibility: visible;
 }
-

@@ -1,0 +1,35 @@
+.iconContainer {
+    display:  flex;
+    gap: 10px;
+    /* margin-top: px; */
+}
+
+.follow {
+    margin-top: 10px;
+    color: #fff !important;
+}
+
+.iconLink {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    background-color: #1a1a1a;
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    color: #fff;
+}
+.icon:hover {
+    color: #01DB83;
+}
+
+.iconWechat {
+    color: #fff;
+}
+
+.iconWechat:hover {
+    color: #01DB83;
+}

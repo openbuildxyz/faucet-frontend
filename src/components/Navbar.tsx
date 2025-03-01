@@ -2,12 +2,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '../styles/navbar.module.css';
 import { useState, useEffect } from 'react';
-import { Button, Dropdown, Space } from 'antd';
+import { Button, Dropdown, Space,Typography } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { requestAccessToken } from "@/api/faucet";
 import { requestUser } from "@/api/user";
 import { useAuth } from '../context/AuthContext';
+
+const { Text } = Typography;
 
 import type { MenuProps } from 'antd';
 
@@ -27,9 +29,8 @@ const CustomAvatar = ({ src, alt, size }) => {
       <Image
         src={src}
         alt={alt}
-        width={size}  // 设置具体的宽度
-        height={size} // 设置具体的高度
-      // sizes="(max-width: 768px) 40px, (max-width: 1024px) 50px, 80px"  // 设置不同视口宽度的图像尺寸
+        width={size}  
+        height={size} 
       />
     </div>
   );
@@ -89,14 +90,14 @@ const Navbar = () => {
     {
       key: '1',
       label: [github],
-      disabled: true,
+      // disabled: true,
     },
     {
       type: 'divider',
     },
     {
       key: '2',
-      label: 'Sign out',
+      label: <Text className={styles.signOutBtn}>Sign out</Text>,
       icon: <LogoutOutlined />,
       onClick: handleSignOut,
     },
@@ -106,7 +107,7 @@ const Navbar = () => {
     <nav className={styles.nav}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <Link href="/faucet/monad" className={styles.logo}>
+          <Link href="/monad" className={styles.logo}>
             <Image
               src="/logo.png"
               alt="OpenBuild Faucet Logo"
@@ -126,8 +127,8 @@ const Navbar = () => {
                 </a>
               </Dropdown>
             ) : (
-              <Button className={styles.signInButton} onClick={handleSignIn}>
-                Sign In
+              <Button type="default" className={styles.signInButton} onClick={handleSignIn}>
+                <Text className={styles.signInText}>Sign In</Text>
               </Button>
             )}
           </div>

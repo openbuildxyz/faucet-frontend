@@ -1,14 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Card, Input, Button, Typography, Image, Popover, notification } from "antd";
+import React, { useState, useRef, useEffect, ReactNode } from "react";
+import { Card, Input, Button, Typography, Image, Popover, message, Modal } from "antd";
 import styles from "../styles/faucet-form.module.css";
 import { requestToken } from "@/api/faucet";
-import { WalletOutlined, WarningOutlined,  CheckCircleOutlined, CloseCircleOutlined, InfoCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { GithubOutlined, TwitterOutlined, WalletOutlined } from '@ant-design/icons';
 import GitRank from './GitRank';
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { requestUser } from "@/api/user";
-import type { } from 'antd';
-
+import SocialLinks from "./SocialLinks";
 
 
 const { Title, Paragraph, Text } = Typography;
@@ -20,55 +19,73 @@ const FaucetForm = () => {
   const containerRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [tx, setTx] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<ReactNode>(null);
 
-  const [api, contextHolder] = notification.useNotification();
+  // const [api, contextHolder] = notification.useNotification();
 
-
-  const openNotification = (type: 'success' | 'error' | 'info' | 'warning', message: string) => {
-    const iconMap = {
-      success: <CheckCircleOutlined style={{ color: '#52c41a' }} />,
-      error: <CloseCircleOutlined style={{ color: '#f5222d' }} />,
-      info: <InfoCircleOutlined style={{ color: '#1890ff' }} />,
-      warning: <ExclamationCircleOutlined style={{ color: '#faad14' }} />,
-    };
-
-    api.open({
-      message: type.charAt(0).toUpperCase() + type.slice(1), // 首字母大写
-      description: message,
-      icon: iconMap[type],  // 使用图标映射
-    });
+  const showModal = () => {
+    setIsModalOpen(true);
   };
 
-  const handleSubmit = async () => {
-    const isValidAddress = /^0x[a-fA-F0-9]{40}$/.test(address);
-    if (!address || !isValidAddress) {
-      openNotification("error", "Please enter a valid EVM wallet address")
-      return;
-    }
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
 
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+
+
+  // const openNotification = (type: 'success' | 'error' | 'info' | 'warning', message: string) => {
+  //   const iconMap = {
+  //     success: <CheckCircleOutlined style={{ color: '#52c41a' }} />,
+  //     error: <CloseCircleOutlined style={{ color: '#f5222d' }} />,
+  //     info: <InfoCircleOutlined style={{ color: '#1890ff' }} />,
+  //     warning: <ExclamationCircleOutlined style={{ color: '#faad14' }} />,
+  //   };
+
+  //   api.open({
+  //     message: type.charAt(0).toUpperCase() + type.slice(1), // 首字母大写
+  //     description: message,
+  //     icon: iconMap[type],  // 使用图标映射
+  //   });
+  // };
+
+  const handleSubmit = async () => {
     if (!isAuthenticated) {
-      openNotification("error", "please log in to continue!")
+      setModalContent(<Text className={styles.modalNote}>Please <Link className={styles.toOpenBuild} href={process.env.NEXT_PUBLIC_OAUTH} target="_blank">Sign in</Link> to get your GiitHub Rank！ </Text>);
+      showModal();
       return;
     }
 
     if (!github) {
-      openNotification("error", "Please bind your GitHub in OpenBuiild first!")
+      setModalContent(<Text className={styles.modalNote}>Please <Link className={styles.toOpenBuild} href="https://openbuild.xyz/profile" target="_blank">Bind</Link>  your GitHub in OpenBuiild first！ </Text>);
+      showModal();
       return;
     }
+
+
+    const isValidAddress = /^0x[a-fA-F0-9]{40}$/.test(address);
+    if (!address || !isValidAddress) {
+      message.error("Please enter a valid EVM wallet address!")
+      return;
+    }
+
 
     setIsLoading(true);
 
     try {
       const response = await requestToken(address);
-      // Check if response is successful and contains data
       if (response?.data?.tx) {
         setTx(response.data.tx);
-        openNotification("success", "Transaction sent successfully!")
+        message.success("Transaction sent successfully!")
       } else {
-        openNotification("error", response.message)
+        message.error(response.message)
       }
     } catch (error) {
-      openNotification("error", "An error occurred while sending tokens, please try again later")
+      message.error("An error occurred, please try again later!")
     } finally {
       setIsLoading(false);
     }
@@ -76,7 +93,7 @@ const FaucetForm = () => {
 
   useEffect(() => {
     const handleFocus = async () => {
-      if (!github) {
+      if (isAuthenticated && !github) {
         const userResponse = await requestUser();
         if (userResponse.success) {
           updateGithub(github)
@@ -94,17 +111,16 @@ const FaucetForm = () => {
 
   const explorer = process.env.NEXT_PUBLIC_MONAD_EXPLORER
 
-  const wechatPopver = (
-    <img src="/assistant.png" className={styles.wechatPng} alt="Large Image" width={300} height={300} />
-  );
-
 
   return (
     <Card className={styles.container}>
+      <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Text>{modalContent}</Text>
+      </Modal>
       <Title level={2} className={styles.cardTitle}>
         Monad Faucet
       </Title>
-      {contextHolder}
+      {/* {contextHolder} */}
       <Input
         prefix={<WalletOutlined className={styles.walletIcon} />}
         placeholder="Enter your EVM wallet address"
@@ -132,42 +148,46 @@ const FaucetForm = () => {
         Your GitHub rank determines the amount you can get every 24 hours.<br />
       </Paragraph>
       <GitRank />
-      {isAuthenticated ?
-        github ?
+      <div className={styles.gitContent}>
+        {isAuthenticated && github &&
           <Image
             src={`https://github-readme-stats.vercel.app/api?username=${github}&card_width=510&title_color=836EF9&show_icons=true`}
             alt="GitHub Stats"
           />
-          :
-          <Paragraph>
-            <WarningOutlined className={styles.WarnGit} />
-            <Text className={styles.note}>Please bind your GitHub in OpenBuiild first, click <Link className={styles.toOpenBuild} href="https://openbuild.xyz/profile" target="_blank">here</Link> to blind. </Text>
-          </Paragraph>
-        :
-        <Paragraph>
-          <WarningOutlined className={styles.WarnGit} />
-          <Text className={styles.note}>Please <Link className={styles.toOpenBuild} href={process.env.NEXT_PUBLIC_OAUTH}>Sign in</Link> to get your GiitHub Rank. </Text>
-        </Paragraph>
-      }
-      <div className={styles.contactContainer}>
-        <Text className={styles.contact}>If you have any questions or want to communicate with Nads, please join Monad China Devs Community: </Text>
-        <div className={styles.iconContainer}>
-          <Link
-            href="https://t.me/OpenBuildxyz"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open Telegram"
-            className={styles.tgIcon}
-          >
-            <img src="/telegram.png" alt="telegram" width={30} height={30} />
-          </Link>
-          <div className={styles.wechatIcon} ref={containerRef}>
-            <Popover content={wechatPopver}>
-              <img src="/wechat.png" className={styles.wechat} alt="wechat" width={30} height={30} />
-            </Popover>
-          </div>
-        </div>
+          //   :
+          //   <Paragraph>
+          //     <WarningOutlined className={styles.WarnGit} />
+          //     <Text className={styles.note}>Please bind your GitHub in OpenBuiild first, click <Link className={styles.toOpenBuild} href="https://openbuild.xyz/profile" target="_blank">here</Link> to blind. </Text>
+          //   </Paragraph>
+          // :
+          // <Paragraph>
+          //   <WarningOutlined className={styles.WarnGit} />
+          //   <Text className={styles.note}>Please <Link className={styles.toOpenBuild} href={process.env.NEXT_PUBLIC_OAUTH}>Sign in</Link> to get your GiitHub Rank. </Text>
+          // </Paragraph>
+        }
       </div>
+
+      {/* <div className={styles.contactContainer}>
+        <Text className={styles.contact}>If you have any questions or want to communicate with Nads, please join Monad China Devs Community. </Text>
+      </div> */}
+
+      <SocialLinks />
+      {/* <div className={styles.iconContainer}>
+        <Link
+          href="https://t.me/OpenBuildxyz"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Telegram"
+          className={styles.tgIcon}
+        >
+          <img src="/telegram.png" alt="telegram" width={30} height={30} />
+        </Link>
+        <div className={styles.wechatIcon} ref={containerRef}>
+          <Popover content={wechatPopver}>
+            <img src="/wechat.png" className={styles.wechat} alt="wechat" width={30} height={30} />
+          </Popover>
+        </div>
+      </div> */}
     </Card>
   );
 }

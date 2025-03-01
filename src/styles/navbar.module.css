@@ -145,11 +145,25 @@
     background-color: #1a1e22;
     color: white;
   }
-
+  
   .signInButton {
+    background-color: #01DB83 !important;
+  }
+
+  .signInButton:hover {
+    background-color: #00FB96 !important;
+  }
+
+
+  .signOutBtn {
     font-size: large;
   }
   
+  .signInText {
+    color: #1a1a1a !important;
+    font-size: large;
+  }
+
   .divider {
     font-size: 14px;
     color: #333;
