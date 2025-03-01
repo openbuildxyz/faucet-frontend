@@ -14,7 +14,7 @@ export default function SocialLinks() {
       <Title level={3} className={styles.follow}>Follow us</Title>
       <div className={styles.iconContainer}>
         <SocialLink href="https://t.me/OpenBuildxyz" icon={<FaTelegramPlane size={30} />} label="Telegram" />
-        <SocialLink href="hhttps://x.com/OpenBuildxyz" icon={<Twitter size={30} />} label="Twitter" />
+        <SocialLink href="https://x.com/OpenBuildxyz" icon={<Twitter size={30} />} label="Twitter" />
         <SocialLink href="https://github.com/openbuildxyz" icon={<Github size={30} />} label="GitHub" />
         <SocialLink href="" icon={<FaWeixin size={30} />} label="WeChat" />
       </div>
@@ -41,7 +41,6 @@ function SocialLink({ href, icon, label }: SocialLinkProps) {
         className={styles.iconLink}
         aria-label={label}
       >
-
         <Popover content={wechatPopver}>
           <span className={styles.iconWechat}>{icon}</span>
         </Popover>
@@ -53,6 +52,7 @@ function SocialLink({ href, icon, label }: SocialLinkProps) {
         href={href}
         className={styles.iconLink}
         aria-label={label}
+        target="__blank"
       >
         <span className={styles.icon}>{icon}</span>
       </Link>
