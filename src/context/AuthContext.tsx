@@ -1,5 +1,8 @@
 // src/context/AuthContext.tsx
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import Cookies from "js-cookie";
+import { requestUser } from "@/api/user";
+
 
 // 定义 Context 的类型
 interface AuthContextType {
@@ -9,7 +12,7 @@ interface AuthContextType {
   avatar: string;
   uid: string;
   github: string;  // 新增 github 字段
-  login: (username: string, token: string, avatar: string, uid: string, github: string) => void;
+  login: (username: string, avatar: string, uid: string, github: string) => void;
   logout: () => void;
   updateToken: (username: string) => void;
   updateGithub: (github: string) => void;
@@ -40,13 +43,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [uid, setUid] = useState<string>(''); // 新增 uid 状态
   const [github, setGithub] = useState<string>('');  // 新增 github 状态
 
-  // 从 sessionStorage 中恢复用户认证状态
+  // 从 localStorage 中恢复用户认证状态
   useEffect(() => {
-    const storedToken = sessionStorage.getItem('token');
-    const storedUsername = sessionStorage.getItem('username');
-    const storedAvatar = sessionStorage.getItem('avatar');
-    const storedUid = sessionStorage.getItem('uid');
-    const storedGithub = sessionStorage.getItem('github'); // 获取 github 信息
+    const storedToken = Cookies.get("token");
+
+    if (storedToken && !isAuthenticated) {
+      const userResponse = requestUser();
+      if (userResponse.success) {
+        const respUid = userResponse.data?.uid;
+        const respUsername = userResponse.data?.username;
+        const respAvatar = userResponse.data?.avatar;
+        const respGithub = userResponse.data?.github;
+        login(respUsername, token, respAvatar, respUid, respGithub);
+      } else {
+        
+      }
+    }
+
+
+    const storedUsername = localStorage.getItem('username');
+    const storedAvatar = localStorage.getItem('avatar');
+    const storedUid = localStorage.getItem('uid');
+    const storedGithub = localStorage.getItem('github');
 
     if (storedToken && storedUsername) {
       setIsAuthenticated(true);
@@ -55,30 +73,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (storedAvatar) setAvatar(storedAvatar);
       if (storedUid) setUid(storedUid); // 恢复 uid
       if (storedGithub) setGithub(storedGithub); // 恢复 github
-    }
+    } 
   }, []);
 
 
   const updateToken = (token: string) => {
-    sessionStorage.setItem('token', token);
+    Cookies.set("token", token, { expires: 7 });
     setToken(token);
   };
 
 
   const updateGithub = (github: string) => {
-    sessionStorage.setItem('github', github);
+    localStorage.setItem('github', github);
   };
 
-  // 登录并保存用户信息到 sessionStorage
-  const login = (username: string, token: string, avatar: string, uid: string, github: string) => {
-    sessionStorage.setItem('username', username);
-    sessionStorage.setItem('token', token);
-    sessionStorage.setItem('avatar', avatar);
-    sessionStorage.setItem('uid', uid); // 保存 uid
-    sessionStorage.setItem('github', github); // 保存 github 信息
+  // 登录并保存用户信息到 
+  const login = (username: string, avatar: string, uid: string, github: string) => {
+    localStorage.setItem('username', username);
+    localStorage.setItem('avatar', avatar);
+    localStorage.setItem('uid', uid); // 保存 uid
+    localStorage.setItem('github', github); // 保存 github 信息
     setIsAuthenticated(true);
     setUsername(username);
-    setToken(token);
     setAvatar(avatar);
     setUid(uid); // 更新 uid
     setGithub(github); // 更新 github
@@ -87,17 +103,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // 登出并清除用户信息
   const logout = () => {
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('avatar');
-    sessionStorage.removeItem('uid'); // 清除 uid
-    sessionStorage.removeItem('github'); // 清除 github 信息
+    localStorage.removeItem('username');
+    localStorage.removeItem('avatar');
+    localStorage.removeItem('uid'); // 清除 uid
+    localStorage.removeItem('github'); // 清除 github 信息
     setIsAuthenticated(false);
     setUsername('');
     setToken('');
     setAvatar('');
     setUid(''); // 清除 uid
     setGithub(''); // 清除 github
+
+    // 移除 token
+    Cookies.remove("token");
   };
 
   return (

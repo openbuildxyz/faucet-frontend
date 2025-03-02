@@ -47,19 +47,18 @@ const Navbar = () => {
     const processCode = async () => {
       if (code && !hasProcessed) { // Ensure it only runs once
         console.log("Received OAuth code:", code);
-        setHasProcessed(true); // Mark as processed
+        setHasProcessed(true); 
         try {
           const response = await requestAccessToken(code);
           if (response.success) {
             updateToken(response.data?.token);
             const userResponse = await requestUser();
             if (userResponse.success) {
-              const token = response.data?.token;
               const respUid = userResponse.data?.uid;
               const respUsername = userResponse.data?.username;
               const respAvatar = userResponse.data?.avatar;
               const respGithub = userResponse.data?.github;
-              login(respUsername, token, respAvatar, respUid, respGithub);
+              login(respUsername, respAvatar, respUid, respGithub);
             }
           } else {
             // Handle failure

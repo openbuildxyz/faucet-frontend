@@ -1,3 +1,6 @@
+import Cookies from "js-cookie";
+
+
 export interface ApiResponse<T> {
   code: number;
   message: string;
@@ -16,7 +19,7 @@ export const apiRequest = async <T>(
     throw new Error("API URL is not defined");
   }
 
-  const token = sessionStorage.getItem("token");
+  const token = Cookies.get("token");
 
   const options: RequestInit = {
     method,
