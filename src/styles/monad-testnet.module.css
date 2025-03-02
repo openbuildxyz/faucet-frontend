@@ -3,6 +3,8 @@
     padding: 14px;
     border-radius: 20px; 
     width: 80%;
+    max-width: 500px; /* 限制最大宽度，避免在大屏幕上过宽 */
+    margin: 0 auto; /* 居中 */
 }
 
 .field {
@@ -18,6 +20,7 @@
     justify-content: flex-end; /* 居右对齐 */
 }
 
+/* 按钮样式 */
 .addTestnetBtn {
     height: 50px;
     background-color: #836EF9 !important;
@@ -25,18 +28,21 @@
     border-radius: 20px;
     margin-bottom: 20px;
     border: none;
+    padding: 10px 20px; /* 添加内边距，适配触摸 */
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
 }
 
 .addTestnetBtn:hover {
-    color:rgba(25, 27, 31, 0.9) !important;
+    color: rgba(25, 27, 31, 0.9) !important;
+    background-color: #6b5ae0 !important;
 }
-
 
 .addTestnetInfo {
     color: white;
     font-size: 20px;
     margin-top: 20px;
-    align-content: center !important;
+    text-align: center; /* 居中显示 */
 }
 
 .label {
@@ -46,6 +52,7 @@
     font-size: 15px;
 }
 
+/* 值容器 */
 .valueContainer {
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 6px;
@@ -71,4 +78,62 @@
 
 .copyIcon:hover {
     opacity: 1;
+}
+
+/* 响应式适配移动端 */
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* 宽度自适应 */
+        padding: 12px;
+    }
+
+    .addTestnetBtn {
+        height: 45px; /* 按钮缩小 */
+        font-size: 16px;
+        width: 100%; /* 按钮全宽 */
+    }
+
+    .addTestnetInfo {
+        font-size: 18px;
+    }
+
+    .label {
+        font-size: 14px;
+    }
+
+    .value {
+        font-size: 13px;
+    }
+
+    .copyIcon {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95%; /* 小屏幕适配 */
+        padding: 10px;
+    }
+
+    .addTestnetBtn {
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .addTestnetInfo {
+        font-size: 16px;
+    }
+
+    .label {
+        font-size: 13px;
+    }
+
+    .value {
+        font-size: 12px;
+    }
+
+    .copyIcon {
+        font-size: 12px;
+    }
 }
