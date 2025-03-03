@@ -40,6 +40,7 @@ function SocialLink({ href, icon, label }: SocialLinkProps) {
         href={href}
         className={styles.iconLink}
         aria-label={label}
+        onClick={(e) => e.preventDefault()}
       >
         <Popover content={wechatPopver}>
           <span className={styles.iconWechat}>{icon}</span>
@@ -53,6 +54,7 @@ function SocialLink({ href, icon, label }: SocialLinkProps) {
         className={styles.iconLink}
         aria-label={label}
         target="__blank"
+        onClick={(e) => e.preventDefault()}
       >
         <span className={styles.icon}>{icon}</span>
       </Link>
