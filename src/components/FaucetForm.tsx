@@ -146,7 +146,7 @@ const FaucetForm = () => {
         </Button>
         <Paragraph className={styles.note}>
           Note: Testnet tokens are for test only and have no real value.
-          Your GitHub rank determines the amount you can get every 24 hours.<br />
+          Your <Link href="https://github.com/anuraghazra/github-readme-stats" target="_blank" className={styles.gitRank}>GitHub Rank</Link> determines the amount you can get every 24 hours.<br />
         </Paragraph>
         <GitRank />
         <div className={styles.gitContent}>
