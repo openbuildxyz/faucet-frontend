@@ -148,6 +148,7 @@
   
   .signInButton {
     background-color: #01DB83 !important;
+    border: #01DB83 !important;
   }
 
   .signInButton:hover {

@@ -3,6 +3,15 @@
     padding: 14px;
     border-radius: 20px;
     width: 100%;
+    min-height: 100%; 
+    /* position: relative;
+    padding-bottom: 50px; */
+}
+
+.content {
+    /* overflow: auto; */
+    /* padding-bottom: 50px;
+    min-height: 100px; */
 }
 
 .cardTitle {
@@ -48,6 +57,7 @@
     border: none;
     color: #fff;
 }
+
 
 .claimLimit {
     color: #836EF9;

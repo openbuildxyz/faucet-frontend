@@ -24,6 +24,7 @@
 .addTestnetBtn {
     height: 50px;
     background-color: #836EF9 !important;
+    color: #ffffff;
     font-size: 18px;
     border-radius: 20px;
     margin-bottom: 20px;
@@ -34,8 +35,7 @@
 }
 
 .addTestnetBtn:hover {
-    color: rgba(25, 27, 31, 0.9) !important;
-    background-color: #6b5ae0 !important;
+    color: #ffffff !important;
 }
 
 .addTestnetInfo {

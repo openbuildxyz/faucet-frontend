@@ -1,8 +1,18 @@
+.container {
+    bottom: 6%;
+    left: 6%;
+    width: 100%;
+    text-align: left;
+    padding: 10px 0;
+    /* position: absolute; */
+}
+
+
 .iconContainer {
     display:  flex;
     gap: 10px;
-    /* margin-top: px; */
 }
+
 
 .follow {
     margin-top: 10px;
@@ -11,25 +21,27 @@
 
 .iconLink {
     display: flex;
-    width: 50px;
-    height: 50px;
-    background-color: #1a1a1a;
-    border-radius: 15px;
+    width: 32px;
+    height: 32px;
+    background-color: #535258;
+    border-radius: 10px;
     justify-content: center;
     align-items: center;
 }
 
+.iconLink:hover {
+    background-color: #6A6973;
+}
+
+
 .icon {
     color: #fff;
+    display: flex;
 }
-.icon:hover {
-    color: #01DB83;
-}
+
 
 .iconWechat {
     color: #fff;
+    display: flex;
 }
 
-.iconWechat:hover {
-    color: #01DB83;
-}
