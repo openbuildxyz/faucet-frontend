@@ -22,8 +22,6 @@ const FaucetForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState<ReactNode>(null);
 
-  // const [api, contextHolder] = notification.useNotification();
-
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -37,31 +35,15 @@ const FaucetForm = () => {
   };
 
 
-
-  // const openNotification = (type: 'success' | 'error' | 'info' | 'warning', message: string) => {
-  //   const iconMap = {
-  //     success: <CheckCircleOutlined style={{ color: '#52c41a' }} />,
-  //     error: <CloseCircleOutlined style={{ color: '#f5222d' }} />,
-  //     info: <InfoCircleOutlined style={{ color: '#1890ff' }} />,
-  //     warning: <ExclamationCircleOutlined style={{ color: '#faad14' }} />,
-  //   };
-
-  //   api.open({
-  //     message: type.charAt(0).toUpperCase() + type.slice(1), // 首字母大写
-  //     description: message,
-  //     icon: iconMap[type],  // 使用图标映射
-  //   });
-  // };
-
   const handleSubmit = async () => {
     if (!isAuthenticated) {
-      setModalContent(<Text className={styles.modalNote}>Please <Link className={styles.toOpenBuild} href={process.env.NEXT_PUBLIC_OAUTH} target="_blank">Sign in</Link> to get your GiitHub Rank！ </Text>);
+      setModalContent(<Text className={styles.modalNote}>Please <Link className={styles.toOpenBuild} href={process.env.NEXT_PUBLIC_OAUTH} target="_blank">Sign in</Link> to get your GitHub Rank！ </Text>);
       showModal();
       return;
     }
 
     if (!github) {
-      setModalContent(<Text className={styles.modalNote}>Please <Link className={styles.toOpenBuild} href="https://openbuild.xyz/profile" target="_blank">Bind</Link>  your GitHub in OpenBuiild first！ </Text>);
+      setModalContent(<Text className={styles.modalNote}>Please <Link className={styles.toOpenBuild} href="https://openbuild.xyz/profile" target="_blank">Bind</Link>  your GitHub in OpenBuild first！ </Text>);
       showModal();
       return;
     }
@@ -112,10 +94,22 @@ const FaucetForm = () => {
   const explorer = process.env.NEXT_PUBLIC_MONAD_EXPLORER
 
 
+  const handleChange = (e) => {
+    let newValue = e.target.value;
+    newValue = newValue.replace(/[^a-fA-F0-9x]/g, "");
+
+    setAddress(newValue);
+  };
+
+
+
   return (
     <Card className={styles.container}>
       <div className={styles.content}>
-        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
+          okButtonProps={{ style: { backgroundColor: "#836EF9", border: "none" } }} 
+          cancelButtonProps={{ style: {color: "#836EF9", borderColor: "#836EF9"} }} 
+          >
           <Text>{modalContent}</Text>
         </Modal>
         <Title level={2} className={styles.cardTitle}>
@@ -128,7 +122,8 @@ const FaucetForm = () => {
           size="large"
           className={styles.addressInput}
           value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          onChange={handleChange}
+          maxLength={42}
         />
         {tx && <Paragraph className={styles.cardDescription}>
           <a className={styles.toExplorer} href={`${explorer}${tx}`} target="_blank" rel="noopener noreferrer">View on MonadExplorer</a>
