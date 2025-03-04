@@ -3,8 +3,9 @@
     padding: 14px;
     border-radius: 20px; 
     width: 80%;
-    max-width: 500px; /* 限制最大宽度，避免在大屏幕上过宽 */
-    margin: 0 auto; /* 居中 */
+
+    /* max-width: 500px;  */
+    /* margin: 0 auto; */
 }
 
 .field {
