@@ -11,11 +11,10 @@ export default function SocialLinks() {
 
   return (
     <div className={styles.container}>
-      {/* <Title level={4} className={styles.follow}>Follow us</Title> */}
       <div className={styles.iconContainer}>
+        <SocialLink href="https://github.com/openbuildxyz/faucet-frontend" icon={<Github size={16} />} label="GitHub" />
         <SocialLink href="https://t.me/OpenBuildxyz" icon={<FaTelegramPlane size={16} />} label="Telegram" />
         {/* <SocialLink href="https://x.com/OpenBuildxyz" icon={<Twitter size={16} />} label="Twitter" /> */}
-        {/* <SocialLink href="https://github.com/openbuildxyz" icon={<Github size={16} />} label="GitHub" /> */}
         <SocialLink href="" icon={<FaWeixin size={16} />} label="WeChat" />
       </div>
     </div>
@@ -54,7 +53,6 @@ function SocialLink({ href, icon, label }: SocialLinkProps) {
         className={styles.iconLink}
         aria-label={label}
         target="__blank"
-        onClick={(e) => e.preventDefault()}
       >
         <span className={styles.icon}>{icon}</span>
       </Link>
