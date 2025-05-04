@@ -1,19 +1,19 @@
 import React, { useState, useRef, useEffect, ReactNode } from "react";
 import { Card, Input, Button, Typography, Image, Popover, message, Modal } from "antd";
-import styles from "../styles/zerog-faucet-form.module.css";
+import styles from "../styles/camp-faucet-form.module.css";
 import { requestToken } from "@/api/faucet";
 import { GithubOutlined, TwitterOutlined, WalletOutlined } from '@ant-design/icons';
-import ZeroGGitRank from './0gGitRank';
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { requestUser } from "@/api/user";
 import SocialLinks from "./0gSocialLinks";
+import CampGitRank from "./CampGitRank";
 
 
 const { Title, Paragraph, Text } = Typography;
 
 
-const ZeroFaucetForm = () => {
+const CampFaucetForm = () => {
   const { isAuthenticated, github, updateGithub } = useAuth();
   const [address, setAddress] = useState("");
   const containerRef = useRef(null);
@@ -113,7 +113,7 @@ const ZeroFaucetForm = () => {
           <Text>{modalContent}</Text>
         </Modal>
         <Title level={2} className={styles.cardTitle}>
-          0G Faucet
+          Camp Faucet
         </Title>
         {/* {contextHolder} */}
         <Input
@@ -137,17 +137,17 @@ const ZeroFaucetForm = () => {
           loading={isLoading}
           disabled={!address}
         >
-          Get Testnet 0G
+          Get Testnet CAMP
         </Button>
         <Paragraph className={styles.note}>
           Note: Testnet tokens are for test only and have no real value.
           Your <Link href="https://github.com/anuraghazra/github-readme-stats" target="_blank" className={styles.gitRank}>GitHub Rank</Link> determines the amount you can get every 24 hours.<br />
         </Paragraph>
-        <ZeroGGitRank />
+        <CampGitRank />
         <div className={styles.gitContent}>
           {isAuthenticated && github &&
             <Image
-              src={`https://github-readme-stats.vercel.app/api?username=${github}&card_width=510&title_color=01DB83&show_icons=true`}
+              src={`https://github-readme-stats.vercel.app/api?username=${github}&card_width=510&title_color=ff6d01&show_icons=true`}
               alt="GitHub Stats"
             />
             //   :
@@ -164,7 +164,7 @@ const ZeroFaucetForm = () => {
         </div>
 
         <div className={styles.contactContainer}>
-          <Text className={styles.contact}>Welcome to follow and join the 0G Community. </Text>
+          <Text className={styles.contact}>Welcome to follow and join the Camp Community. </Text>
         </div>
       </div>
       <SocialLinks />
@@ -172,4 +172,4 @@ const ZeroFaucetForm = () => {
   );
 }
 
-export default ZeroFaucetForm;
+export default CampFaucetForm;

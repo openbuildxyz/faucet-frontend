@@ -1,0 +1,140 @@
+.container {
+    background-color: rgba(25, 27, 31, 0.9);
+    padding: 14px;
+    border-radius: 20px; 
+    width: 80%;
+
+    /* max-width: 500px;  */
+    /* margin: 0 auto; */
+}
+
+.field {
+    margin-bottom: 20px;
+}
+
+.field:last-child {
+    margin-bottom: 0;
+}
+
+.addTestContainer {
+    display: flex;
+    justify-content: flex-end; /* 居右对齐 */
+}
+
+/* 按钮样式 */
+.addTestnetBtn {
+    height: 50px;
+    background-color: #ff6d01 !important;
+    color: #1a1a1a;
+    font-size: 18px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    border: none;
+    padding: 10px 20px; /* 添加内边距，适配触摸 */
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.addTestnetBtn:hover {
+    color: #ffffff !important;
+}
+
+.addTestnetInfo {
+    color: white;
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: center; /* 居中显示 */
+}
+
+.label {
+    display: block;
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+
+/* 值容器 */
+.valueContainer {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.value {
+    color: #ffffff !important;
+    font-size: 14px;
+    flex-grow: 1;
+    margin-right: 8px;
+}
+
+.copyIcon {
+    color: #ff6d01;
+    opacity: 0.7;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.copyIcon:hover {
+    opacity: 1;
+}
+
+/* 响应式适配移动端 */
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* 宽度自适应 */
+        padding: 12px;
+    }
+
+    .addTestnetBtn {
+        height: 45px; /* 按钮缩小 */
+        font-size: 16px;
+        width: 100%; /* 按钮全宽 */
+    }
+
+    .addTestnetInfo {
+        font-size: 18px;
+    }
+
+    .label {
+        font-size: 14px;
+    }
+
+    .value {
+        font-size: 13px;
+    }
+
+    .copyIcon {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95%; /* 小屏幕适配 */
+        padding: 10px;
+    }
+
+    .addTestnetBtn {
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .addTestnetInfo {
+        font-size: 16px;
+    }
+
+    .label {
+        font-size: 13px;
+    }
+
+    .value {
+        font-size: 12px;
+    }
+
+    .copyIcon {
+        font-size: 12px;
+    }
+}
