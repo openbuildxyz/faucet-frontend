@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, ReactNode } from "react";
 import { Card, Input, Button, Typography, Image, Popover, message, Modal } from "antd";
-import styles from "../styles/faucet-form.module.css";
+import styles from "../styles/zerog-faucet-from.module.css";
 import { requestToken } from "@/api/faucet";
 import { GithubOutlined, TwitterOutlined, WalletOutlined } from '@ant-design/icons';
-import GitRank from './GitRank';
+import ZeroGGitRank from './0gGitRank';
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { requestUser } from "@/api/user";
@@ -13,7 +13,7 @@ import SocialLinks from "./SocialLinks";
 const { Title, Paragraph, Text } = Typography;
 
 
-const FaucetForm = () => {
+const ZeroFaucetForm = () => {
   const { isAuthenticated, github, updateGithub } = useAuth();
   const [address, setAddress] = useState("");
   const containerRef = useRef(null);
@@ -59,7 +59,7 @@ const FaucetForm = () => {
     setIsLoading(true);
 
     try {
-      const response = await requestToken(address, "MON");
+      const response = await requestToken(address, "0G");
       if (response?.data?.tx) {
         setTx(response.data.tx);
         message.success("Transaction sent successfully!")
@@ -91,7 +91,7 @@ const FaucetForm = () => {
   }, [github, updateGithub]);
 
 
-  const explorer = process.env.NEXT_PUBLIC_MONAD_EXPLORER
+  const explorer = process.env.NEXT_PUBLIC_0G_EXPLORER
 
 
   const handleChange = (e) => {
@@ -107,13 +107,13 @@ const FaucetForm = () => {
     <Card className={styles.container}>
       <div className={styles.content}>
         <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
-          okButtonProps={{ style: { backgroundColor: "#836EF9", border: "none" } }} 
-          cancelButtonProps={{ style: {color: "#836EF9", borderColor: "#836EF9"} }} 
+          okButtonProps={{ style: { backgroundColor: "#01DB83", border: "none" } }} 
+          cancelButtonProps={{ style: {color: "#01DB83", borderColor: "#01DB83"} }} 
           >
           <Text>{modalContent}</Text>
         </Modal>
         <Title level={2} className={styles.cardTitle}>
-          Monad Faucet
+          0G Faucet
         </Title>
         {/* {contextHolder} */}
         <Input
@@ -137,13 +137,13 @@ const FaucetForm = () => {
           loading={isLoading}
           disabled={!address}
         >
-          Get Testnet MON
+          Get Testnet 0G
         </Button>
         <Paragraph className={styles.note}>
           Note: Testnet tokens are for test only and have no real value.
           Your <Link href="https://github.com/anuraghazra/github-readme-stats" target="_blank" className={styles.gitRank}>GitHub Rank</Link> determines the amount you can get every 24 hours.<br />
         </Paragraph>
-        <GitRank />
+        <ZeroGGitRank />
         <div className={styles.gitContent}>
           {isAuthenticated && github &&
             <Image
@@ -164,7 +164,7 @@ const FaucetForm = () => {
         </div>
 
         <div className={styles.contactContainer}>
-          <Text className={styles.contact}>If you have any questions or want to communicate with Nads, please join Monad China Devs Community. </Text>
+          <Text className={styles.contact}>If you have any questions or want to communicate with us, please join OpenBuild Devs Community. </Text>
         </div>
       </div>
       <SocialLinks />
@@ -172,4 +172,4 @@ const FaucetForm = () => {
   );
 }
 
-export default FaucetForm;
+export default ZeroFaucetForm;

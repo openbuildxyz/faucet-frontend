@@ -46,7 +46,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // 从 localStorage 中恢复用户认证状态
   useEffect(() => {
     const storedToken = Cookies.get("token");
-
     if (storedToken && !isAuthenticated) {
       const userResponse = requestUser();
       if (userResponse.success) {
