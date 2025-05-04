@@ -59,7 +59,7 @@ const CampFaucetForm = () => {
     setIsLoading(true);
 
     try {
-      const response = await requestToken(address, "0G");
+      const response = await requestToken(address, "CAMP");
       if (response?.data?.tx) {
         setTx(response.data.tx);
         message.success("Transaction sent successfully!")
