@@ -147,7 +147,7 @@ const ZeroFaucetForm = () => {
         <div className={styles.gitContent}>
           {isAuthenticated && github &&
             <Image
-              src={`https://github-readme-stats.vercel.app/api?username=${github}&card_width=510&title_color=836EF9&show_icons=true`}
+              src={`https://github-readme-stats.vercel.app/api?username=${github}&card_width=510&title_color=01DB83&show_icons=true`}
               alt="GitHub Stats"
             />
             //   :
@@ -164,7 +164,7 @@ const ZeroFaucetForm = () => {
         </div>
 
         <div className={styles.contactContainer}>
-          <Text className={styles.contact}>If you have any questions or want to communicate with us, please contact us. </Text>
+          <Text className={styles.contact}>Welcome to follow and join the 0G Community. </Text>
         </div>
       </div>
       <SocialLinks />
