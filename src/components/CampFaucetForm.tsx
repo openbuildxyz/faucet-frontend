@@ -6,7 +6,7 @@ import { GithubOutlined, TwitterOutlined, WalletOutlined } from '@ant-design/ico
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { requestUser } from "@/api/user";
-import SocialLinks from "./0gSocialLinks";
+import SocialLinks from "./CampSocialLinks";
 import CampGitRank from "./CampGitRank";
 
 
