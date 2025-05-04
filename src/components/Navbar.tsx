@@ -76,7 +76,10 @@ const Navbar = () => {
 
 
   const handleSignIn = () => {
-    router.push(process.env.NEXT_PUBLIC_OAUTH);
+    const currentUrlWithoutParams = window.location.origin + router.pathname;
+    const oauthUrl = `${process.env.NEXT_PUBLIC_OAUTH}&redirect_uri=${currentUrlWithoutParams}`;
+    console.log(oauthUrl);
+    router.push(oauthUrl);
   };
 
   const handleSignOut = () => {

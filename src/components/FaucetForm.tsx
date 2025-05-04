@@ -7,7 +7,7 @@ import GitRank from './GitRank';
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { requestUser } from "@/api/user";
-import SocialLinks from "./SocialLinks";
+import SocialLinks from "./MonadSocialLinks";
 
 
 const { Title, Paragraph, Text } = Typography;

@@ -7,7 +7,7 @@ import ZeroGGitRank from './0gGitRank';
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { requestUser } from "@/api/user";
-import SocialLinks from "./SocialLinks";
+import SocialLinks from "./0gSocialLinks";
 
 
 const { Title, Paragraph, Text } = Typography;
@@ -164,7 +164,7 @@ const ZeroFaucetForm = () => {
         </div>
 
         <div className={styles.contactContainer}>
-          <Text className={styles.contact}>If you have any questions or want to communicate with us, please join OpenBuild Devs Community. </Text>
+          <Text className={styles.contact}>If you have any questions or want to communicate with us, please contact us. </Text>
         </div>
       </div>
       <SocialLinks />
