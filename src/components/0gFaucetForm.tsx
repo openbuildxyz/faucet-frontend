@@ -126,7 +126,7 @@ const ZeroFaucetForm = () => {
           maxLength={42}
         />
         {tx && <Paragraph className={styles.cardDescription}>
-          <a className={styles.toExplorer} href={`${explorer}${tx}`} target="_blank" rel="noopener noreferrer">View on MonadExplorer</a>
+          <a className={styles.toExplorer} href={`${explorer}${tx}`} target="_blank" rel="noopener noreferrer">View on BlockExplorer</a>
         </Paragraph>}
         <Button
           type="primary"
