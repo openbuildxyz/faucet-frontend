@@ -13,7 +13,7 @@ const ZerogTestnet = () => {
                     method: 'wallet_addEthereumChain',
                     params: [
                         {
-                            chainId: '0x138D7', 
+                            chainId: '0x40D9', 
                             chainName: '0G-Galileo-Testnet',
                             nativeCurrency: {
                                 name: 'OG',
@@ -35,7 +35,7 @@ const ZerogTestnet = () => {
 
     const networkDetails = [
         { label: 'Network Name', value: '0G-Galileo-Testnet' },
-        { label: 'Chain ID', value: '80087' },
+        { label: 'Chain ID', value: '16601' },
         { label: 'RPC URL', value: 'https://evmrpc-testnet.0g.ai/' },
         { label: 'Block Explorer URL', value: '	https://chainscan-galileo.0g.ai/' },
         { label: 'Currency Symbol', value: '0G' },
