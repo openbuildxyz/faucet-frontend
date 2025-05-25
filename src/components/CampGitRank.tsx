@@ -17,15 +17,21 @@ const campColumns = [
     dataIndex: 'b',
     key: 'b',
   },
+  {
+    title: 'C+, C',
+    dataIndex: 'c',
+    key: 'c',
+  },
 ];
 
 
 const campdata = [
   {
     key: '1',
-    s: '0.5 CAMP',
-    a: '0.3 CAMP',
-    b: '0.1 CAMP',
+    s: '1 CAMP',
+    a: '0.4 CAMP',
+    b: '0.3 CAMP',
+    c: '0.1 CAMP',
   },
 ];
 
