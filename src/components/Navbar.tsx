@@ -84,7 +84,6 @@ const Navbar = () => {
 
   const handleSignOut = () => {
     logout();
-    router.push('/monad');
   };
 
 
