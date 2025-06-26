@@ -30,7 +30,7 @@ const data = [
     s: '1 MON',
     a: '0.4 MON',
     b: '0.3 MON',
-    c: '1 MON',
+    c: '0.1 MON',
   },
 ];
 
