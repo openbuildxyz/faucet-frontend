@@ -27,10 +27,10 @@ const columns = [
 const data = [
   {
     key: '1',
-    s: '5 MON',
-    a: '4 MON',
-    b: '3.5 MON',
-    c: '3 MON',
+    s: '1 MON',
+    a: '0.4 MON',
+    b: '0.3 MON',
+    c: '0.1 MON',
   },
 ];
 
