@@ -30,20 +30,34 @@
 
 .sparkle {
   display: inline-block;
-  animation: sparkle 2s ease-in-out infinite;
+  animation: neonPulse 1.8s ease-in-out infinite;
+  color: #18f335;
+  text-shadow:
+    0 0 5px #18f335,
+    0 0 10px #18f335,
+    0 0 20px #18f335,
+    0 0 40px #18f335;
 }
 
-@keyframes sparkle {
-  0%,
-  100% {
-    transform: scale(1) rotate(0deg);
+@keyframes neonPulse {
+  0%, 100% {
     opacity: 1;
+    text-shadow:
+      0 0 5px #18f335,
+      0 0 10px #18f335,
+      0 0 20px #18f335,
+      0 0 40px #18f335;
   }
   50% {
-    transform: scale(1.2) rotate(180deg);
-    opacity: 0.8;
+    opacity: 0.6;
+    text-shadow:
+      0 0 2px #18f335,
+      0 0 5px #18f335,
+      0 0 10px #18f335,
+      0 0 20px #18f335;
   }
 }
+
 
 .subtitle {
   font-size: 1.375rem;
@@ -96,7 +110,7 @@
 }
 
 .secondaryButton:hover {
-  border-color: #8b5cf6;
+  border-color: #18f335;
   background: rgba(139, 92, 246, 0.1);
   transform: translateY(-2px);
 }

@@ -18,7 +18,16 @@ export default function Home() {
               Get Started
             </Link> */}
             <Link href="/monad" className={styles.secondaryButton}>
-              Try Monad Faucet
+                Monad
+            </Link>
+            <Link href="/0g" className={styles.secondaryButton}>
+                0G 
+            </Link>
+            <Link href="/nexus" className={styles.secondaryButton}>
+                Nexus 
+            </Link>
+            <Link href="/camp" className={styles.secondaryButton}>
+                Camp 
             </Link>
           </div>
         </div>
@@ -28,7 +37,7 @@ export default function Home() {
             <div className={styles.featureIcon}>🌐</div>
             <h3 className={styles.featureTitle}>Multi-Chain Support</h3>
             <p className={styles.featureText}>
-              Access faucets for 10+ blockchain networks including Ethereum, Polygon, Arbitrum, Optimism, and more.
+              Access faucets across multiple blockchain networks — currently supporting Monad, 0g, Nexus, and Camp.
             </p>
           </div>
 

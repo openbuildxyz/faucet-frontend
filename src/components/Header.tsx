@@ -19,10 +19,10 @@ interface ChainItem {
 }
 
 const chains: ChainItem[] = [
-  { name: "Monad", path: "/monad", color: "#8B5CF6" },
-  { name: "0G", path: "/0g", color: "#627EEA" },
-  { name: "Nexus", path: "/nexus", color: "#8247E5" },
-  { name: "Camp", path: "/camp", color: "#28A0F0" },
+  { name: "Monad", path: "/monad", color: "#18f335" },
+  { name: "0G", path: "/0g", color: "#18f335" },
+  { name: "Nexus", path: "/nexus", color: "#18f335" },
+  { name: "Camp", path: "/camp", color: "#18f335" },
 ];
 
 const CustomAvatar = ({ src, alt, size }: { src: string; alt: string; size: number }) => (
@@ -42,7 +42,7 @@ const CustomAvatar = ({ src, alt, size }: { src: string; alt: string; size: numb
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAuthenticated, username, token, avatar, github, login, logout, updateToken } = useAuth();
+  const { isAuthenticated, username, avatar, github, login, logout, updateToken } = useAuth();
   const [hasProcessed, setHasProcessed] = useState(false);
   const router = useRouter();
   const { code } = router.query;
@@ -74,7 +74,7 @@ export default function Header() {
     if (!isAuthenticated && !hasProcessed) {
       processCode();
     }
-  }, [code, isAuthenticated, login, token, updateToken, hasProcessed]);
+  }, [code, isAuthenticated, login, updateToken, hasProcessed]);
 
   const handleSignIn = () => {
     const currentUrlWithoutParams = window.location.origin + router.pathname;
@@ -110,11 +110,16 @@ export default function Header() {
       </Link>
 
       <nav className={styles.nav}>
-        {/* 链下拉菜单 */}
-        <div className={styles.faucetMenu}>
-          <button className={styles.menuButton} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        {/* 链下拉菜单：鼠标移出后自动关闭 */}
+        <div
+          className={styles.faucetMenu}
+          onMouseLeave={() => setIsMenuOpen(false)}
+        >
+          <button
+            className={styles.menuButton}
+            onMouseEnter={() => setIsMenuOpen(true)}
+          >
             Faucets
-            <span className={styles.menuIcon}>{isMenuOpen ? "✕" : "☰"}</span>
           </button>
           {isMenuOpen && (
             <div className={styles.dropdown}>
