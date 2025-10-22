@@ -19,7 +19,7 @@
 .logoIcon {
   width: 2.5rem;
   height: 2.5rem;
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #01DB83 0%, #01DB83 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -43,7 +43,7 @@
 .menuButton {
   padding: 0.625rem 1.25rem;
   background: rgba(139, 92, 246, 0.1);
-  color: #18f335;
+  color: #01DB83;
   border: 1px solid rgba(139, 92, 246, 0.3);
   border-radius: 0.5rem;
   font-weight: 600;
@@ -98,9 +98,9 @@
 
 .signInButton {
   padding: 0.625rem 1.5rem;
-  background: #8b5cf6;
-  color: #ffffff;
-  border: none;
+  background: #01DB83 !important;
+  color: #000 !important;
+  border: none !important;
   border-radius: 0.5rem;
   font-weight: 600;
   font-size: 0.9375rem;
@@ -109,7 +109,9 @@
 }
 
 .signInButton:hover {
-  background: #7c3aed;
+  background: #01DB83 !important;
+  color: #000 !important;
+  font-weight: 700;
   transform: translateY(-1px);
 }
 

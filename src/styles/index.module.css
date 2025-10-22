@@ -31,30 +31,30 @@
 .sparkle {
   display: inline-block;
   animation: neonPulse 1.8s ease-in-out infinite;
-  color: #18f335;
+  color: #01DB83;
   text-shadow:
-    0 0 5px #18f335,
-    0 0 10px #18f335,
-    0 0 20px #18f335,
-    0 0 40px #18f335;
+    0 0 5px #01DB83,
+    0 0 10px #01DB83,
+    0 0 20px #01DB83,
+    0 0 40px #01DB83;
 }
 
 @keyframes neonPulse {
   0%, 100% {
     opacity: 1;
     text-shadow:
-      0 0 5px #18f335,
-      0 0 10px #18f335,
-      0 0 20px #18f335,
-      0 0 40px #18f335;
+      0 0 5px #01DB83,
+      0 0 10px #01DB83,
+      0 0 20px #01DB83,
+      0 0 40px #01DB83;
   }
   50% {
     opacity: 0.6;
     text-shadow:
-      0 0 2px #18f335,
-      0 0 5px #18f335,
-      0 0 10px #18f335,
-      0 0 20px #18f335;
+      0 0 2px #01DB83,
+      0 0 5px #01DB83,
+      0 0 10px #01DB83,
+      0 0 20px #01DB83;
   }
 }
 
@@ -110,7 +110,7 @@
 }
 
 .secondaryButton:hover {
-  border-color: #18f335;
+  border-color: #01DB83;
   background: rgba(139, 92, 246, 0.1);
   transform: translateY(-2px);
 }

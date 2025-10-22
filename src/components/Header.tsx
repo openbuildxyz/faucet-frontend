@@ -1,5 +1,5 @@
 import type React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Header.module.css";
@@ -42,6 +42,8 @@ const CustomAvatar = ({ src, alt, size }: { src: string; alt: string; size: numb
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const closeTimer = useRef<NodeJS.Timeout | null>(null);
+
   const { isAuthenticated, username, avatar, github, login, logout, updateToken } = useAuth();
   const [hasProcessed, setHasProcessed] = useState(false);
   const router = useRouter();
@@ -86,6 +88,26 @@ export default function Header() {
     logout();
   };
 
+  const handleMenuToggle = () => {
+    // 点击切换菜单
+    setIsMenuOpen((prev) => !prev);
+  };
+
+  const handleMouseLeave = () => {
+    // 延迟关闭菜单，防止用户移到下拉菜单时立即消失
+    closeTimer.current = setTimeout(() => {
+      setIsMenuOpen(false);
+    }, 300); // 300ms 容错时间
+  };
+
+  const handleMouseEnter = () => {
+    // 鼠标重新移入时取消关闭
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+
   const dropdownItems = [
     {
       key: "1",
@@ -110,17 +132,16 @@ export default function Header() {
       </Link>
 
       <nav className={styles.nav}>
-        {/* 链下拉菜单：鼠标移出后自动关闭 */}
+        {/* 链下拉菜单：点击展开，移出延迟关闭 */}
         <div
           className={styles.faucetMenu}
-          onMouseLeave={() => setIsMenuOpen(false)}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
-          <button
-            className={styles.menuButton}
-            onMouseEnter={() => setIsMenuOpen(true)}
-          >
+          <button className={styles.menuButton} onClick={handleMenuToggle}>
             Faucets
           </button>
+
           {isMenuOpen && (
             <div className={styles.dropdown}>
               {chains.map((chain) => (
