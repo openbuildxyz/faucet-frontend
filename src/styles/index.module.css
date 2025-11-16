@@ -67,13 +67,6 @@
   line-height: 1.6;
 }
 
-.ctaButtons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
 
 .primaryButton {
   padding: 1rem 2rem;
@@ -113,6 +106,16 @@
   border-color: #01DB83;
   background: rgba(139, 92, 246, 0.1);
   transform: translateY(-2px);
+}
+
+/* 只添加图片和文字的垂直对齐样式 */
+.secondaryButton img {
+  vertical-align: middle;
+  margin-right: 0.5rem; /* 图片和文字之间的间距 */
+}
+
+.secondaryButton span {
+  vertical-align: middle;
 }
 
 .features {

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import styles from "../styles/index.module.css"
 
 export default function Home() {
@@ -15,19 +16,23 @@ export default function Home() {
 
           <div className={styles.ctaButtons}>
             {/* <Link href="/faucet/monad" className={styles.primaryButton}>
-              Get Started
-            </Link> */}
+    Get Started
+  </Link> */}
             <Link href="/monad" className={styles.secondaryButton}>
-                Monad
+              <Image src="/monad.jpg" alt="Monad" width={20} height={20} className={styles.logo} />
+              Monad
             </Link>
             <Link href="/0g" className={styles.secondaryButton}>
-                0G 
+              <img src="/0g.png" alt="0G" width={20} height={20} />
+              0G
             </Link>
             <Link href="/nexus" className={styles.secondaryButton}>
-                Nexus 
+              <img src="/nexus.jpg" alt="Nexus" width={20} height={20} />
+              Nexus
             </Link>
             <Link href="/camp" className={styles.secondaryButton}>
-                Camp 
+              <img src="/camp.jpg" alt="Camp" width={20} height={20} />
+              Camp
             </Link>
           </div>
         </div>
