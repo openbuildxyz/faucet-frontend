@@ -4,12 +4,10 @@ import { getServerEnv } from "./env";
 const accessTokenResponseSchema = z.object({
   status: z.number(),
   code: z.number().optional(),
-  data: z.object({
-    token: z.string(),
-  }),
+  data: z.record(z.string(), z.unknown()).optional(),
   message: z.string().optional(),
   id: z.string().optional(),
-});
+}).passthrough();
 
 const getUserResponseSchema = z.object({
   id: z.string().optional(),
@@ -44,7 +42,27 @@ export async function requestOpenBuildAccessToken(code: string) {
     throw new Error(payload.message || "OpenBuild OAuth failed");
   }
 
-  return payload.data.token;
+  const data = payload.data || {};
+  const token =
+    data.token ||
+    data.access_token ||
+    data.accessToken ||
+    payload.token ||
+    payload.access_token ||
+    payload.accessToken;
+
+  if (typeof token !== "string" || !token) {
+    console.error("OpenBuild OAuth response missing token:", {
+      topLevelKeys: Object.keys(payload),
+      dataKeys: Object.keys(data),
+      status: payload.status,
+      code: payload.code,
+      message: payload.message,
+    });
+    throw new Error("OpenBuild OAuth response missing token");
+  }
+
+  return token;
 }
 
 export async function requestOpenBuildUser(oauthToken: string) {
