@@ -14,6 +14,7 @@ export const config = {
 
 const signRequestSchema = z.object({
   code: z.string().min(1),
+  redirect_uri: z.string().url().optional(),
 });
 
 export default async function handler(
@@ -29,8 +30,8 @@ export default async function handler(
   }
 
   try {
-    const { code } = signRequestSchema.parse(req.body);
-    const oauthToken = await requestOpenBuildAccessToken(code);
+    const { code, redirect_uri: redirectUri } = signRequestSchema.parse(req.body);
+    const oauthToken = await requestOpenBuildAccessToken(code, redirectUri);
     const db = getDb();
 
     const [existingUser] = await db

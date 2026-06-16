@@ -67,7 +67,8 @@ export default function Header() {
       if (oauthCode && !hasProcessed) {
         setHasProcessed(true);
         try {
-          const response = await requestAccessToken(oauthCode);
+          const redirectUri = window.location.origin + router.pathname;
+          const response = await requestAccessToken(oauthCode, redirectUri);
           if (!response.success || !response.data?.token) {
             console.error("OAuth token exchange failed:", response.message);
             message.error(response.message || "OpenBuild sign in failed.");

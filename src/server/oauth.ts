@@ -38,22 +38,34 @@ function numberValue(value: unknown) {
   return 0;
 }
 
-export async function requestOpenBuildAccessToken(code: string) {
+export async function requestOpenBuildAccessToken(code: string, redirectUri?: string) {
   const env = getServerEnv();
+  const body = {
+    client_id: env.OAUTH_CLIENT_ID,
+    client_secret: env.OAUTH_CLIENT_SECRET,
+    code,
+    ...(redirectUri ? { redirect_uri: redirectUri } : {}),
+  };
+
   const response = await fetch(env.OAUTH_ACCESS_API, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      client_id: env.OAUTH_CLIENT_ID,
-      client_secret: env.OAUTH_CLIENT_SECRET,
-      code,
-    }),
+    body: JSON.stringify(body),
   });
 
   const payload = accessTokenResponseSchema.parse(await response.json());
   if (payload.status !== 200) {
+    console.error("OpenBuild OAuth access token request failed:", {
+      httpStatus: response.status,
+      status: payload.status,
+      code: payload.code,
+      message: payload.message,
+      hasRedirectUri: Boolean(redirectUri),
+      topLevelKeys: Object.keys(payload),
+      dataKeys: Object.keys(payload.data || {}),
+    });
     throw new Error(payload.message || "OpenBuild OAuth failed");
   }
 

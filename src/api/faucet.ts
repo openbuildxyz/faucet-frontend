@@ -53,9 +53,11 @@ export const requestToken = async (
 
 export const requestAccessToken = async (
   code: string,
+  redirectUri?: string,
 ) => {
   const data = {
     code: code,
+    redirect_uri: redirectUri,
   };
 
   try {
