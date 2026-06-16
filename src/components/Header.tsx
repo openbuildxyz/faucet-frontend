@@ -47,12 +47,21 @@ export default function Header() {
   const { isAuthenticated, username, avatar, github, login, logout, updateToken } = useAuth();
   const [hasProcessed, setHasProcessed] = useState(false);
   const router = useRouter();
-  const { code } = router.query;
+  const { code, error, error_description } = router.query;
 
   // 处理 OAuth 回调
   useEffect(() => {
     const processCode = async () => {
       const oauthCode = Array.isArray(code) ? code[0] : code;
+      const oauthError = Array.isArray(error) ? error[0] : error;
+      const oauthErrorDescription = Array.isArray(error_description)
+        ? error_description[0]
+        : error_description;
+      if (oauthError) {
+        console.error("OpenBuild OAuth failed:", oauthError, oauthErrorDescription);
+        return;
+      }
+
       if (oauthCode && !hasProcessed) {
         setHasProcessed(true);
         try {
@@ -84,11 +93,11 @@ export default function Header() {
     if (router.isReady && !isAuthenticated && !hasProcessed) {
       processCode();
     }
-  }, [code, isAuthenticated, login, router, updateToken, hasProcessed]);
+  }, [code, error, error_description, isAuthenticated, login, router, updateToken, hasProcessed]);
 
   const handleSignIn = () => {
     const currentUrlWithoutParams = window.location.origin + router.pathname;
-    const oauthUrl = `${process.env.NEXT_PUBLIC_OAUTH}&redirect_uri=${currentUrlWithoutParams}`;
+    const oauthUrl = `${process.env.NEXT_PUBLIC_OAUTH}&redirect_uri=${encodeURIComponent(currentUrlWithoutParams)}`;
     router.push(oauthUrl);
   };
 

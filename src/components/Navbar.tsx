@@ -41,11 +41,20 @@ const Navbar = () => {
   const router = useRouter();
   const [hasProcessed, setHasProcessed] = useState(false);
 
-  const { code } = router.query;
+  const { code, error, error_description } = router.query;
 
   useEffect(() => {
     const processCode = async () => {
       const oauthCode = Array.isArray(code) ? code[0] : code;
+      const oauthError = Array.isArray(error) ? error[0] : error;
+      const oauthErrorDescription = Array.isArray(error_description)
+        ? error_description[0]
+        : error_description;
+      if (oauthError) {
+        console.error("OpenBuild OAuth failed:", oauthError, oauthErrorDescription);
+        return;
+      }
+
       if (oauthCode && !hasProcessed) { // Ensure it only runs once
         console.log("Received OAuth code:", oauthCode);
         setHasProcessed(true); 
@@ -78,12 +87,12 @@ const Navbar = () => {
     if (router.isReady && !isAuthenticated && !hasProcessed) {
       processCode();
     }
-  }, [code, isAuthenticated, login, router, token, updateToken, hasProcessed]); //
+  }, [code, error, error_description, isAuthenticated, login, router, token, updateToken, hasProcessed]); //
 
 
   const handleSignIn = () => {
     const currentUrlWithoutParams = window.location.origin + router.pathname;
-    const oauthUrl = `${process.env.NEXT_PUBLIC_OAUTH}&redirect_uri=${currentUrlWithoutParams}`;
+    const oauthUrl = `${process.env.NEXT_PUBLIC_OAUTH}&redirect_uri=${encodeURIComponent(currentUrlWithoutParams)}`;
     console.log(oauthUrl);
     router.push(oauthUrl);
   };

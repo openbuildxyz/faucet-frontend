@@ -68,6 +68,7 @@ export default async function handler(
 
     return ok(res, publicUser(updatedUser || user));
   } catch (error) {
+    console.error("/api/user failed:", error);
     return handleApiError(res, error);
   }
 }

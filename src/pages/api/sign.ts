@@ -50,6 +50,7 @@ export default async function handler(
       token: await generateToken(oauthToken),
     });
   } catch (error) {
+    console.error("/api/sign failed:", error);
     return handleApiError(res, error);
   }
 }
