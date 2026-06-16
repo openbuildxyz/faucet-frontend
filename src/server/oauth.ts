@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { createHash } from "crypto";
 import { getServerEnv } from "./env";
 
 const accessTokenResponseSchema = z.object({
@@ -38,6 +39,16 @@ function numberValue(value: unknown) {
   return 0;
 }
 
+function envDebugSummary(env: ReturnType<typeof getServerEnv>, redirectUri?: string) {
+  return {
+    clientId: env.OAUTH_CLIENT_ID,
+    accessApi: env.OAUTH_ACCESS_API,
+    redirectUri,
+    clientSecretLength: env.OAUTH_CLIENT_SECRET.length,
+    clientSecretSha256: createHash("sha256").update(env.OAUTH_CLIENT_SECRET).digest("hex").slice(0, 12),
+  };
+}
+
 export async function requestOpenBuildAccessToken(code: string, redirectUri?: string) {
   const env = getServerEnv();
   const body = {
@@ -63,6 +74,7 @@ export async function requestOpenBuildAccessToken(code: string, redirectUri?: st
       code: payload.code,
       message: payload.message,
       hasRedirectUri: Boolean(redirectUri),
+      env: envDebugSummary(env, redirectUri),
       topLevelKeys: Object.keys(payload),
       dataKeys: Object.keys(payload.data || {}),
     });
