@@ -1,19 +1,22 @@
 import { z } from "zod";
 
+const trimString = <T extends z.ZodType<string>>(schema: T) =>
+  z.preprocess((value) => (typeof value === "string" ? value.trim() : value), schema);
+
 const envSchema = z.object({
-  DATABASE_URL: z.string().min(1),
-  JWT_SECRET: z.string().min(16),
-  OAUTH_CLIENT_ID: z.string().min(1),
-  OAUTH_CLIENT_SECRET: z.string().min(1),
-  OAUTH_ACCESS_API: z.string().url(),
-  OAUTH_GET_USER: z.string().url(),
-  FAUCET_PRIVATE_KEY: z.string().min(1),
-  FAUCET_ZEROG_PRIVATE_KEY: z.string().min(1).optional(),
-  RPC_MONAD_DEVNET: z.string().url(),
-  RPC_ZERO_TESTNET: z.string().url(),
-  RPC_CAMP_TESTNET: z.string().url(),
-  RPC_NEXUS_TESTNET: z.string().url(),
-  ALLOWED_ORIGINS: z.string().optional(),
+  DATABASE_URL: trimString(z.string().min(1)),
+  JWT_SECRET: trimString(z.string().min(16)),
+  OAUTH_CLIENT_ID: trimString(z.string().min(1)),
+  OAUTH_CLIENT_SECRET: trimString(z.string().min(1)),
+  OAUTH_ACCESS_API: trimString(z.string().url()),
+  OAUTH_GET_USER: trimString(z.string().url()),
+  FAUCET_PRIVATE_KEY: trimString(z.string().min(1)),
+  FAUCET_ZEROG_PRIVATE_KEY: trimString(z.string().min(1)).optional(),
+  RPC_MONAD_DEVNET: trimString(z.string().url()),
+  RPC_ZERO_TESTNET: trimString(z.string().url()),
+  RPC_CAMP_TESTNET: trimString(z.string().url()),
+  RPC_NEXUS_TESTNET: trimString(z.string().url()),
+  ALLOWED_ORIGINS: trimString(z.string()).optional(),
 });
 
 export type ServerEnv = z.infer<typeof envSchema>;

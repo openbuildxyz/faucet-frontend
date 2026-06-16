@@ -103,7 +103,8 @@ export default function Header() {
 
   const handleSignIn = () => {
     const currentUrlWithoutParams = window.location.origin + router.pathname;
-    const oauthUrl = `${process.env.NEXT_PUBLIC_OAUTH}&redirect_uri=${encodeURIComponent(currentUrlWithoutParams)}`;
+    const oauthBaseUrl = (process.env.NEXT_PUBLIC_OAUTH || "").trim();
+    const oauthUrl = `${oauthBaseUrl}&redirect_uri=${encodeURIComponent(currentUrlWithoutParams)}`;
     router.push(oauthUrl);
   };
 
