@@ -52,31 +52,39 @@ export default function Header() {
   // 处理 OAuth 回调
   useEffect(() => {
     const processCode = async () => {
-      if (code && !hasProcessed) {
+      const oauthCode = Array.isArray(code) ? code[0] : code;
+      if (oauthCode && !hasProcessed) {
         setHasProcessed(true);
         try {
-          const response = await requestAccessToken(code);
-          if (response.success) {
-            updateToken(response.data?.token);
-            const userResponse = await requestUser();
-            if (userResponse.success) {
-              const respUid = userResponse.data?.uid;
-              const respUsername = userResponse.data?.username;
-              const respAvatar = userResponse.data?.avatar;
-              const respGithub = userResponse.data?.github;
-              login(respUsername, respAvatar, respUid, respGithub);
-            }
+          const response = await requestAccessToken(oauthCode);
+          if (!response.success || !response.data?.token) {
+            console.error("OAuth token exchange failed:", response.message);
+            return;
           }
+
+          updateToken(response.data.token);
+          const userResponse = await requestUser();
+          if (!userResponse.success || !userResponse.data) {
+            console.error("OpenBuild user request failed:", userResponse.message);
+            return;
+          }
+
+          const respUid = userResponse.data.uid;
+          const respUsername = userResponse.data.username;
+          const respAvatar = userResponse.data.avatar;
+          const respGithub = userResponse.data.github;
+          login(respUsername, respAvatar, String(respUid || ""), respGithub);
+          await router.replace(router.pathname, undefined, { shallow: true });
         } catch (error) {
           console.error(error);
         }
       }
     };
 
-    if (!isAuthenticated && !hasProcessed) {
+    if (router.isReady && !isAuthenticated && !hasProcessed) {
       processCode();
     }
-  }, [code, isAuthenticated, login, updateToken, hasProcessed]);
+  }, [code, isAuthenticated, login, router, updateToken, hasProcessed]);
 
   const handleSignIn = () => {
     const currentUrlWithoutParams = window.location.origin + router.pathname;

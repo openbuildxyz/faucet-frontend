@@ -1,9 +1,17 @@
 import { apiRequest } from "./api";
 
+type UserResponse = {
+  uid: number;
+  avatar: string;
+  username: string;
+  email: string;
+  github: string;
+};
+
 export const requestUser = async () => {
   try {
     // Call the generic API request function
-    const response = await apiRequest<{ message: string, data: any }>(
+    const response = await apiRequest<UserResponse>(
       "/api/user",  // Faucet endpoint
       "GET",     // Request method
     );

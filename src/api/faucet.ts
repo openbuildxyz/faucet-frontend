@@ -1,5 +1,14 @@
 import { apiRequest } from "./api";
 
+type FaucetResponse = {
+  address: string;
+  tx: string;
+};
+
+type SignResponse = {
+  token: string;
+};
+
 // Request token
 export const requestToken = async (
   address: string,
@@ -12,7 +21,7 @@ export const requestToken = async (
 
   try {
     // Call the generic API request function
-    const response = await apiRequest<{ message: string, data: any }>(
+    const response = await apiRequest<FaucetResponse>(
       "/api/faucet",  // Faucet endpoint
       "POST",     // Request method
       tokenData,
@@ -51,7 +60,7 @@ export const requestAccessToken = async (
 
   try {
     // Call the generic API request function
-    const response = await apiRequest<{ message: string, data: any }>(
+    const response = await apiRequest<SignResponse>(
       "/api/sign",  // Faucet endpoint
       "POST",     // Request method
       data   // Request body (includes address, amount, token symbol, and chain ID)
