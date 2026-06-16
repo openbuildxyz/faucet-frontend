@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Header.module.css";
-import { Button, Dropdown, Space, Typography } from "antd";
+import { Button, Dropdown, message, Space, Typography } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { requestAccessToken } from "@/api/faucet";
@@ -59,6 +59,8 @@ export default function Header() {
         : error_description;
       if (oauthError) {
         console.error("OpenBuild OAuth failed:", oauthError, oauthErrorDescription);
+        message.error(oauthErrorDescription || "OpenBuild authorization was not completed.");
+        await router.replace(router.pathname, undefined, { shallow: true });
         return;
       }
 
@@ -68,13 +70,15 @@ export default function Header() {
           const response = await requestAccessToken(oauthCode);
           if (!response.success || !response.data?.token) {
             console.error("OAuth token exchange failed:", response.message);
+            message.error(response.message || "OpenBuild sign in failed.");
             return;
           }
 
           updateToken(response.data.token);
-          const userResponse = await requestUser();
+          const userResponse = await requestUser(response.data.token);
           if (!userResponse.success || !userResponse.data) {
             console.error("OpenBuild user request failed:", userResponse.message);
+            message.error(userResponse.message || "Unable to load OpenBuild user profile.");
             return;
           }
 
@@ -86,6 +90,7 @@ export default function Header() {
           await router.replace(router.pathname, undefined, { shallow: true });
         } catch (error) {
           console.error(error);
+          message.error(error instanceof Error ? error.message : "OpenBuild sign in failed.");
         }
       }
     };

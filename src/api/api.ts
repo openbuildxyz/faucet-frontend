@@ -11,10 +11,11 @@ export const apiRequest = async <T>(
   endpoint: string,
   method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
   body: unknown = null,
+  authToken?: string,
 ): Promise<ApiResponse<T>> => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  const apiUrl = normalizeApiBase(process.env.NEXT_PUBLIC_API_URL || "");
 
-  const token = Cookies.get("token");
+  const token = authToken || Cookies.get("token");
 
   const options: RequestInit = {
     method,
@@ -26,11 +27,11 @@ export const apiRequest = async <T>(
   };
 
   try {
-    const response = await fetch(`${apiUrl}${endpoint}`, options); // 动态构建请求地址
+    const response = await fetch(buildApiUrl(apiUrl, endpoint), options); // 动态构建请求地址
     const data = await response.json();
 
     return {
-      code: data.code || 200,
+      code: data.code ?? response.status,
       message: data.message,
       data: data.data,
     };
@@ -42,3 +43,12 @@ export const apiRequest = async <T>(
     };
   }
 };
+
+function normalizeApiBase(apiUrl: string) {
+  return apiUrl.replace(/\/+$/, "").replace(/\/api$/, "");
+}
+
+function buildApiUrl(apiUrl: string, endpoint: string) {
+  const normalizedEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+  return `${apiUrl}${normalizedEndpoint}`;
+}

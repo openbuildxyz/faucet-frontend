@@ -13,15 +13,30 @@ const getUserResponseSchema = z.object({
   id: z.string().optional(),
   status: z.number(),
   code: z.number().optional(),
-  data: z.object({
-    uid: z.number(),
-    avatar: z.string().nullable().optional(),
-    user_name: z.string().nullable().optional(),
-    email: z.string().nullable().optional(),
-    github: z.string().nullable().optional(),
-  }),
+  data: z.record(z.string(), z.unknown()),
   message: z.string().optional(),
-});
+}).passthrough();
+
+function stringValue(value: unknown) {
+  if (typeof value === "string") {
+    return value;
+  }
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return String(value);
+  }
+  return "";
+}
+
+function numberValue(value: unknown) {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+  if (typeof value === "string" && value.trim()) {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+  return 0;
+}
 
 export async function requestOpenBuildAccessToken(code: string) {
   const env = getServerEnv();
@@ -78,12 +93,25 @@ export async function requestOpenBuildUser(oauthToken: string) {
     throw new Error(payload.message || "OpenBuild user request failed");
   }
 
+  const data = payload.data || {};
+  const uid = numberValue(data.uid);
+  if (!uid) {
+    console.error("OpenBuild user response missing uid:", {
+      topLevelKeys: Object.keys(payload),
+      dataKeys: Object.keys(data),
+      status: payload.status,
+      code: payload.code,
+      message: payload.message,
+    });
+    throw new Error("OpenBuild user response missing uid");
+  }
+
   return {
     id: payload.id,
-    uid: payload.data.uid,
-    avatar: payload.data.avatar || "",
-    username: payload.data.user_name || "",
-    email: payload.data.email || "",
-    github: payload.data.github || "",
+    uid,
+    avatar: stringValue(data.avatar),
+    username: stringValue(data.user_name || data.username || data.name),
+    email: stringValue(data.email),
+    github: stringValue(data.github || data.github_username || data.githubName),
   };
 }

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '../styles/navbar.module.css';
 import { useState, useEffect } from 'react';
-import { Button, Dropdown, Space,Typography } from 'antd';
+import { Button, Dropdown, message, Space,Typography } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { requestAccessToken } from "@/api/faucet";
@@ -52,6 +52,8 @@ const Navbar = () => {
         : error_description;
       if (oauthError) {
         console.error("OpenBuild OAuth failed:", oauthError, oauthErrorDescription);
+        message.error(oauthErrorDescription || "OpenBuild authorization was not completed.");
+        await router.replace(router.pathname, undefined, { shallow: true });
         return;
       }
 
@@ -62,13 +64,15 @@ const Navbar = () => {
           const response = await requestAccessToken(oauthCode);
           if (!response.success || !response.data?.token) {
             console.error("OAuth token exchange failed:", response.message);
+            message.error(response.message || "OpenBuild sign in failed.");
             return;
           }
 
           updateToken(response.data.token);
-          const userResponse = await requestUser();
+          const userResponse = await requestUser(response.data.token);
           if (!userResponse.success || !userResponse.data) {
             console.error("OpenBuild user request failed:", userResponse.message);
+            message.error(userResponse.message || "Unable to load OpenBuild user profile.");
             return;
           }
 
@@ -80,6 +84,7 @@ const Navbar = () => {
           await router.replace(router.pathname, undefined, { shallow: true });
         } catch (error) {
           console.error(error);
+          message.error(error instanceof Error ? error.message : "OpenBuild sign in failed.");
         }
       }
     };

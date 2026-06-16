@@ -8,12 +8,14 @@ type UserResponse = {
   github: string;
 };
 
-export const requestUser = async () => {
+export const requestUser = async (token?: string) => {
   try {
     // Call the generic API request function
     const response = await apiRequest<UserResponse>(
       "/api/user",  // Faucet endpoint
       "GET",     // Request method
+      null,
+      token,
     );
 
     // If the request is successful and returns data
