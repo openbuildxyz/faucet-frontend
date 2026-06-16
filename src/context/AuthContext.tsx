@@ -14,7 +14,7 @@ interface AuthContextType {
   github: string;  // 新增 github 字段
   login: (username: string, avatar: string, uid: string, github: string) => void;
   logout: () => void;
-  updateToken: (username: string) => void;
+  updateToken: (token: string) => void;
   updateGithub: (github: string) => void;
 }
 
@@ -45,34 +45,36 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // 从 localStorage 中恢复用户认证状态
   useEffect(() => {
-    const storedToken = Cookies.get("token");
-    if (storedToken && !isAuthenticated) {
-      const userResponse = requestUser();
-      if (userResponse.success) {
-        const respUid = userResponse.data?.uid;
-        const respUsername = userResponse.data?.username;
-        const respAvatar = userResponse.data?.avatar;
-        const respGithub = userResponse.data?.github;
-        login(respUsername, token, respAvatar, respUid, respGithub);
-      } else {
-        
+    const restore = async () => {
+      const storedToken = Cookies.get("token");
+      const storedUsername = localStorage.getItem('username');
+      const storedAvatar = localStorage.getItem('avatar');
+      const storedUid = localStorage.getItem('uid');
+      const storedGithub = localStorage.getItem('github');
+
+      if (storedToken && storedUsername) {
+        setIsAuthenticated(true);
+        setToken(storedToken);
+        setUsername(storedUsername);
+        if (storedAvatar) setAvatar(storedAvatar);
+        if (storedUid) setUid(storedUid); // 恢复 uid
+        if (storedGithub) setGithub(storedGithub); // 恢复 github
       }
-    }
 
+      if (storedToken) {
+        const userResponse = await requestUser();
+        if (userResponse.success && userResponse.data) {
+          login(
+            userResponse.data.username || '',
+            userResponse.data.avatar || '',
+            String(userResponse.data.uid || ''),
+            userResponse.data.github || '',
+          );
+        }
+      }
+    };
 
-    const storedUsername = localStorage.getItem('username');
-    const storedAvatar = localStorage.getItem('avatar');
-    const storedUid = localStorage.getItem('uid');
-    const storedGithub = localStorage.getItem('github');
-
-    if (storedToken && storedUsername) {
-      setIsAuthenticated(true);
-      setToken(storedToken);
-      setUsername(storedUsername);
-      if (storedAvatar) setAvatar(storedAvatar);
-      if (storedUid) setUid(storedUid); // 恢复 uid
-      if (storedGithub) setGithub(storedGithub); // 恢复 github
-    } 
+    restore();
   }, []);
 
 
@@ -84,6 +86,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const updateGithub = (github: string) => {
     localStorage.setItem('github', github);
+    setGithub(github);
   };
 
   // 登录并保存用户信息到 

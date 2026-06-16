@@ -77,8 +77,8 @@ const ZeroFaucetForm = () => {
     const handleFocus = async () => {
       if (isAuthenticated && !github) {
         const userResponse = await requestUser();
-        if (userResponse.success) {
-          updateGithub(github)
+        if (userResponse.success && userResponse.data?.github) {
+          updateGithub(userResponse.data.github)
         }
       }
     };

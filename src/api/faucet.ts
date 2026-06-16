@@ -13,7 +13,7 @@ export const requestToken = async (
   try {
     // Call the generic API request function
     const response = await apiRequest<{ message: string, data: any }>(
-      "/faucet",  // Faucet endpoint
+      "/api/faucet",  // Faucet endpoint
       "POST",     // Request method
       tokenData,
     );
@@ -37,7 +37,7 @@ export const requestToken = async (
     // Return error if an exception occurs
     return {
       success: false,
-      message: error.message,
+      message: error instanceof Error ? error.message : "服务器错误",
     };
   }
 };
@@ -52,7 +52,7 @@ export const requestAccessToken = async (
   try {
     // Call the generic API request function
     const response = await apiRequest<{ message: string, data: any }>(
-      "/sign",  // Faucet endpoint
+      "/api/sign",  // Faucet endpoint
       "POST",     // Request method
       data   // Request body (includes address, amount, token symbol, and chain ID)
     );
@@ -76,8 +76,7 @@ export const requestAccessToken = async (
     // Return error if an exception occurs
     return {
       success: false,
-      message: error.message,
+      message: error instanceof Error ? error.message : "服务器错误",
     };
   }
 };
-

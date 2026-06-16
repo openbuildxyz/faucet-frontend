@@ -10,14 +10,9 @@ export interface ApiResponse<T> {
 export const apiRequest = async <T>(
   endpoint: string,
   method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
-  body: any = null,
+  body: unknown = null,
 ): Promise<ApiResponse<T>> => {
-  // 获取 API 域名（根据环境变量）
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-  if (!apiUrl) {
-    throw new Error("API URL is not defined");
-  }
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
   const token = Cookies.get("token");
 
@@ -42,8 +37,8 @@ export const apiRequest = async <T>(
   } catch (error) {
     console.error("API 请求错误:", error);
     return {
-      status: 500,
-      message: error.message || "服务器错误",
+      code: 500,
+      message: error instanceof Error ? error.message : "服务器错误",
     };
   }
 };

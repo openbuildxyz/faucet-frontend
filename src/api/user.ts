@@ -4,7 +4,7 @@ export const requestUser = async () => {
   try {
     // Call the generic API request function
     const response = await apiRequest<{ message: string, data: any }>(
-      "/user",  // Faucet endpoint
+      "/api/user",  // Faucet endpoint
       "GET",     // Request method
     );
 
@@ -27,8 +27,7 @@ export const requestUser = async () => {
     // Return error if an exception occurs
     return {
       success: false,
-      message: error.message,
+      message: error instanceof Error ? error.message : "服务器错误",
     };
   }
 };
-
